@@ -1,0 +1,27 @@
+{
+  "useTaobaoRegistry": true,
+  "git": false,
+  "useConfigFiles": true,
+  "packageManager": "npm",
+  "router": true,
+  "routerHistoryMode": true,
+  "vuex": true,
+  "cssPreprocessor": "sass",
+  "configs": {
+    "vue": {
+      "baseUrl": "./",
+      "lintOnSave": true,
+      "productionSourceMap": false
+    }
+  },
+  "plugins": {
+    "@vue/cli-plugin-babel": {},
+    "@vue/cli-plugin-eslint": {
+      "config": "airbnb",
+      "lintOn": [
+        "save"
+      ]
+    },
+    "@vue/cli-plugin-unit-jest": {}
+  }
+}
