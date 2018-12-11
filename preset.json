@@ -2,7 +2,6 @@
   "useTaobaoRegistry": true,
   "git": false,
   "useConfigFiles": true,
-  "packageManager": "npm",
   "router": true,
   "routerHistoryMode": true,
   "vuex": true,
@@ -11,7 +10,10 @@
     "vue": {
       "baseUrl": "./",
       "lintOnSave": true,
-      "productionSourceMap": false
+      "productionSourceMap": false,
+      "devServer": {
+        "open": true
+      }
     }
   },
   "plugins": {

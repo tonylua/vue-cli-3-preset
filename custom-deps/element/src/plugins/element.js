@@ -4,7 +4,7 @@ import Element from 'element-ui'
 //import enLocale from 'element-ui/lib/locale/lang/en'
 import zhCNLocale from 'element-ui/lib/locale/lang/zh-CN'
 <% } %>
-import '../style/element-variables.scss'
+import '../styles/element-variables.scss'
 
 Vue.use(
   Element
