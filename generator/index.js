@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 
 const epConfig = require('../custom-deps/express/api/config');
 
@@ -11,11 +12,15 @@ module.exports = (api, options, rootOptions) => {
   }
 
   api.render('../template', {
+    'projectName': rootOptions.projectName,
     'vuei18n': promptAnswers['vue-i18n'],
     'express': promptAnswers['local-mock-express']
   })
   
   api.extendPackage({
+    scripts: {
+      "test": "npm run test:unit"
+    },
     dependencies: {
       'whatwg-fetch': '^3.0.0',
       'lodash': '^4.17.11',
@@ -99,5 +104,27 @@ module.exports = {`
     });
   }
 
-  api.onCreateComplete(() => {})
+  api.onCreateComplete(() => {
+    //copy CHANGELOG
+    fs.copyFileSync(
+      path.resolve(__dirname, '../template/CHANGELOG.md'),
+      api.resolve('./CHANGELOG.md')
+    );
+    //rewrite README
+    setTimeout(()=>{
+      fs.writeFileSync(
+        api.resolve('./README.md'),
+        `# ${rootOptions.projectName} \n\n---\n`
+          + fs.readFileSync(
+            path.resolve(__dirname, '../template/README.md'),
+            {encoding: 'utf-8'}
+          ).replace(
+            '<!--LOCAL_EXPRESS?-->',
+            promptAnswers['local-mock-express']
+              ? '### Compiles and local mock server for development\n```\nnpm run servelocal\n```'
+              : ''
+          )
+      )
+    }, 2000);
+  })
 }
