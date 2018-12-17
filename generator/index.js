@@ -38,6 +38,24 @@ module.exports = (api, options, rootOptions) => {
           }
         } 
       }
+    },
+    eslintConfig: {
+      'space-before-function-paren': 'off',
+      'no-underscore-dangle': 'off',
+      'no-param-reassign': 'off',
+      'func-names': 'off',
+      'no-bitwise': 'off',
+      'prefer-rest-params': 'off',
+      'comma-dangle': 'off',
+      'quote-props': 'off',
+      'consistent-return': 'off',
+      'no-plusplus': 'off',
+      'prefer-spread': 'warn',
+      'semi': 'warn',
+      'indent': 'warn',
+      'no-tabs': 'warn',
+      'no-unused-vars': 'warn',
+      'quotes': 'warn'
     }
   })
 
