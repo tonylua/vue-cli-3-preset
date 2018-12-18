@@ -8,7 +8,9 @@ vue create --preset tonylua/vue-cli-3-preset-2019 <YOUR_PROJECT_NAME>
 - [x] i18n
 - [x] local mock server
 - [x] fetch polyfill
-- [ ] common fetch logic
-- [ ] directives
-- [ ] mixins
-- [ ] filters
+- [x] fetchWrapper: common logic
+- [x] fetchWrapper: support timeout
+- [x] fetchWrapper: support download
+- [x] directives
+- [x] mixins
+- [x] filters
