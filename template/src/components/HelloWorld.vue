@@ -1,6 +1,7 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
+    <h2>hello {{ msg2 }}</h2>
     <p>
       For a guide and recipes on how to configure / customize this project,<br>
       check out the
@@ -17,16 +18,47 @@
 </template>
 
 <script>
+import FetchWrapper from '@/utils/fetchWrapper';
+
 export default {
   name: 'HelloWorld',
   props: {
     msg: String,
   },
+  data() {
+    return {
+      msg2: null
+    }
+  },
   <% if (express) { %>
   mounted() {
-    fetch('/ajax-api/sample/info')
-      .then(res => res.json())
-      .then(json => console.log(json));
+    
+    const fetchw = new FetchWrapper({ timeout: 2000 });
+
+    fetchw.get('/ajax-api/sample/delay').catch((ex) => {
+      console.log('time out', ex);
+    });
+
+    fetchw.get('/ajax-api/sample/bad', null, { catchError: false });
+
+    fetchw.get('/ajax-api/sample/wrong');
+
+    fetchw.get('/ajax-api/sample/info').then(
+      res => res.json()
+    ).then(
+      json => {
+        this.msg2 = json.data.hello
+      }
+    );
+
+    fetchw.download('GET', '/ajax-api/sample/down', { filename: 'abc' }).then(
+      json => {
+        if (json.msg) {
+          alert(json.msg);
+        }
+      }
+    );
+
   },
   <% } %>
 };

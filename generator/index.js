@@ -25,6 +25,7 @@ module.exports = (api, options, rootOptions) => {
       'whatwg-fetch': '^3.0.0',
       'lodash': '^4.17.11',
       'qs': '^6.6.0',
+      "file-saver": "^2.0.0",
       'normalize.css': '^8.0.1',
     },
     vue: {
@@ -40,22 +41,25 @@ module.exports = (api, options, rootOptions) => {
       }
     },
     eslintConfig: {
-      'space-before-function-paren': 'off',
-      'no-underscore-dangle': 'off',
-      'no-param-reassign': 'off',
-      'func-names': 'off',
-      'no-bitwise': 'off',
-      'prefer-rest-params': 'off',
-      'comma-dangle': 'off',
-      'quote-props': 'off',
-      'consistent-return': 'off',
-      'no-plusplus': 'off',
-      'prefer-spread': 'warn',
-      'semi': 'warn',
-      'indent': 'warn',
-      'no-tabs': 'warn',
-      'no-unused-vars': 'warn',
-      'quotes': 'warn'
+      rules: {
+        'space-before-function-paren': 'off',
+        'no-underscore-dangle': 'off',
+        'no-param-reassign': 'off',
+        'func-names': 'off',
+        'no-bitwise': 'off',
+        'prefer-rest-params': 'off',
+        'no-trailing-spaces': 'off',
+        'comma-dangle': 'off',
+        'quote-props': 'off',
+        'consistent-return': 'off',
+        'no-plusplus': 'off',
+        'prefer-spread': 'warn',
+        'semi': 'warn',
+        'indent': 'warn',
+        'no-tabs': 'warn',
+        'no-unused-vars': 'warn',
+        'quotes': 'warn'
+      }
     }
   })
 
