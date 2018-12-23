@@ -58,7 +58,11 @@ module.exports = (api, options, rootOptions) => {
         'indent': 'warn',
         'no-tabs': 'warn',
         'no-unused-vars': 'warn',
-        'quotes': 'warn'
+        'quotes': 'warn',
+        'no-void': 'off',
+        'no-nested-ternary': 'off',
+        'import/no-unresolved': 'off',
+        'no-return-assign': 'warn'
       }
     }
   })
