@@ -1,5 +1,14 @@
+# preset for vue cli 3
 
-## Project setup
+## How to use?
+
+```
+vue create --preset tonylua/vue-cli-3-preset-2019 your-project
+```
+
+## Commands
+
+### Project setup
 ```
 npm install
 ```
