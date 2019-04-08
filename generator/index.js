@@ -63,7 +63,13 @@ module.exports = (api, options, rootOptions) => {
         'no-void': 'off',
         'no-nested-ternary': 'off',
         'import/no-unresolved': 'off',
-        'no-return-assign': 'warn'
+        'no-return-assign': 'warn',
+				'linebreak-style': 'off',
+				'prefer-destructuring': 'off',
+				'no-restricted-syntax': 'warn',
+				'arrow-parens': 'off',
+				'import/extensions': 'off',
+				'import/no-extraneous-dependencies': 'off'
       }
     }
   })
