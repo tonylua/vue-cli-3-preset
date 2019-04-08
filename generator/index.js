@@ -12,6 +12,13 @@ module.exports = (api, options, rootOptions) => {
     "local-mock-express": options['local-mock'] === 'express.js'
   }
 
+	const expectFiles = files => {
+		Object.keys(files)
+      .filter(path => path.startsWith('tests/')) // delete unexpect dirs
+      .forEach(path => delete files[path])	
+	}
+	api.render(expectFiles);
+	
   api.render('../template', {
     'projectName': rootOptions.projectName,
     'vuei18n': promptAnswers['vue-i18n'],
@@ -109,12 +116,12 @@ module.exports = {`
   }
 
   api.onCreateComplete(() => {
-    //copy CHANGELOG
+    // copy CHANGELOG
     fs.copyFileSync(
       path.resolve(__dirname, '../template/CHANGELOG.md'),
       api.resolve('./CHANGELOG.md')
     );
-    //rewrite README
+    // rewrite README
     setTimeout(()=>{
       fs.writeFileSync(
         api.resolve('./README.md'),

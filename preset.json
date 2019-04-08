@@ -8,7 +8,7 @@
   "cssPreprocessor": "sass",
   "configs": {
     "vue": {
-      "baseUrl": "./",
+      "publicPath": "/",
       "lintOnSave": true,
       "productionSourceMap": false,
       "devServer": {
