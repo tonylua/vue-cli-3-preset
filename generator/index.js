@@ -1,8 +1,11 @@
 const fs = require('fs');
 const path = require('path');
 const eslintConfig = require('./eslint.config');
+const expressHelper = require('./express.helper');
+const docsHelper = require('./docs.helper');
+const configHelper = require('./config.helper');
 
-const epConfig = require('../custom-deps/express/api/config');
+const epConfig = require('../template/config/config');
 
 module.exports = (api, options, rootOptions) => {
 
@@ -39,16 +42,11 @@ module.exports = (api, options, rootOptions) => {
       'normalize.css': '^8.0.1',
     },
     vue: {
-      devServer: {
-        port: epConfig.port,
-        host: epConfig.host,
-        proxy: {
-          [epConfig.ajaxPrefix]: {
-            changeOrigin: true,
-            target: epConfig.proxy
-          }
-        } 
-      }
+			css: {
+				sourceMap: true
+			},
+      devServer: {},
+			chainWebpack: (config) => {}
     }
   })
 
@@ -77,65 +75,13 @@ module.exports = (api, options, rootOptions) => {
   }
 
   if (promptAnswers['local-mock-express']) {
-
-    //TODO useLocal
-
-    api.extendPackage({
-      scripts: {
-        "express": "nodemon api/server.js",
-        "servelocal": "shell-exec --colored-output \"npm run serve --local\" \"npm run express\""
-      },
-      devDependencies: {
-        'nodemon': '^1.18.7',
-        'klaw-sync': '^6.0.0',
-        'request': '^2.88.0',
-        'express': '^4.16.4',
-        'body-parser': '^1.18.3',
-        'shell-executor': '^6.0.1'
-      }
-    })
-    api.render('../custom-deps/express');
-    api.onCreateComplete(() => {
-      //inject to vue.config.js
-      const vueConfig = api.resolve('./vue.config.js');
-      const newCont = fs.readFileSync(vueConfig, {encoding: 'utf-8'})
-        .replace(
-          /module\.exports\s*\=\s*\{/,
-          `const { original } = JSON.parse(process.env.npm_config_argv);
-const use_local = ~original.indexOf('--local');
-const proxy_url = use_local 
-  ? 'http://${epConfig.host}:${epConfig.localServerPort}' 
-  : '${epConfig.proxy}';          
-module.exports = {`
-        ).replace(
-          /target\s*\:.*\n/,
-          'target: proxy_url,\n'
-        );
-      fs.writeFileSync(vueConfig, newCont);
-    });
+		expressHelper(api);
   }
 
   api.onCreateComplete(() => {
-    // copy CHANGELOG
-    fs.copyFileSync(
-      path.resolve(__dirname, '../template/CHANGELOG.md'),
-      api.resolve('./CHANGELOG.md')
-    );
-    // rewrite README
-    setTimeout(()=>{
-      fs.writeFileSync(
-        api.resolve('./README.md'),
-        `# ${rootOptions.projectName} \n\n---\n`
-          + fs.readFileSync(
-            path.resolve(__dirname, '../template/README.md'),
-            {encoding: 'utf-8'}
-          ).replace(
-            '<!--LOCAL_EXPRESS?-->',
-            promptAnswers['local-mock-express']
-              ? '### Compiles and local mock server for development\n```\nnpm run servelocal\n```'
-              : ''
-          )
-      )
-    }, 2000);
+		configHelper(api);
+		docsHelper(api, 
+			rootOptions.projectName,
+			!!promptAnswers['local-mock-express']);
   })
 }
