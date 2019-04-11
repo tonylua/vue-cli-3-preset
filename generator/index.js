@@ -24,8 +24,9 @@ module.exports = (api, options, rootOptions) => {
 	
   api.render('../template', {
     'projectName': rootOptions.projectName,
-    'vuei18n': promptAnswers['vue-i18n'],
-    'express': promptAnswers['local-mock-express']
+    'opt_i18n': promptAnswers['vue-i18n'],
+    'opt_express': promptAnswers['local-mock-express'],
+		'opt_elementui': promptAnswers['element-ui']
   })
   
   api.extendPackage({
@@ -53,15 +54,16 @@ module.exports = (api, options, rootOptions) => {
   if (promptAnswers['vue-i18n']) {
     api.extendPackage({
       dependencies: {
-        'vue-i18n': '^8.4.0'
+        'vue-i18n': '^8.4.0',
+				'vue-cookie': '^1.1.4'
       }
     })
     api.render('../custom-deps/vue-i18n')
     api.injectImports('src/main.js', 
-      `import i18n from './plugins/vue-i18n'`)
+      `import i18n from './plugins/i18n'`)
   }
 
-  if (promptAnswers['element-ui']) {
+	if (promptAnswers['element-ui']) { // 要晚于 i18n
     api.extendPackage({
       dependencies: {
         'element-ui': '^2.4.11'

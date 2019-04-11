@@ -2,6 +2,9 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
     <h2>hello {{ msg2 }}</h2>
+		<% if (opt_elementui && opt_i18n) { %>
+		<el-button @click="toggleI18n">{{ $t('toggle') }} i18n</el-button>
+		<% } %>
     <p>
       For a guide and recipes on how to configure / customize this project,<br>
       check out the
@@ -19,6 +22,8 @@
 
 <script>
 import FetchWrapper from '@/utils/fetchWrapper';
+<% if (opt_i18n) { %>
+import VueCookie from 'vue-cookie';<% } %>
 
 export default {
   name: 'HelloWorld',
@@ -30,7 +35,7 @@ export default {
       msg2: null
     }
   },
-  <% if (express) { %>
+  <% if (opt_express) { %>
   mounted() {
     
     const fetchw = new FetchWrapper({ timeout: 2000 });
@@ -60,6 +65,17 @@ export default {
     );
 
   },
+	methods: {
+		toggleI18n() {
+			let curr = VueCookie.get('lang');
+			if (!curr) curr = 'zh-CN';
+			if (curr === 'zh-CN') curr = 'en';
+			else curr = 'zh-CN';
+			VueCookie.set('lang', curr);
+			// console.log(curr);
+			location.reload();
+		}
+	}
   <% } %>
 };
 </script>

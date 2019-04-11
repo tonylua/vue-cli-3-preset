@@ -5,8 +5,9 @@ import messages from '@/locale'
 Vue.use(VueI18n)
 
 const i18n = new VueI18n({
-  locale: 'zh-CN',
+  locale: VueCookie.get('lang') || 'zh-CN',
+  fallbackLocale: 'zh-CN',
   messages
 })
 
-export default i18n
+export default i18n;

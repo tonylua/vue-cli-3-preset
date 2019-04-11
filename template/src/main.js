@@ -21,7 +21,7 @@ Object.keys(directives).forEach(key=>{
 Vue.config.productionTip = false;
 
 new Vue({
-  <% if (vuei18n) { %>
+  <% if (opt_i18n) { %>
   i18n,
   <% } %>
   router,
