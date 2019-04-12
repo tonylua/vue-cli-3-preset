@@ -15,21 +15,21 @@ module.exports = (api, options, rootOptions) => {
     "mock-express": options['mock'] === 'express.js'
   }
 
-	api.render((files) => {
-		Object.keys(files)
+  api.render((files) => {
+    Object.keys(files)
       .filter(path => path.startsWith('tests/'))
       .forEach(path => delete files[path]) // delete unexpect dirs
-	});
-	
+  });
+
   api.render('../template', {
     'projectName': rootOptions.projectName,
     'opt_i18n': ANSWERS['vue-i18n'],
     'opt_express': ANSWERS['mock-express'],
-		'opt_elementui': ANSWERS['element-ui']
+    'opt_elementui': ANSWERS['element-ui']
   })
-  
+
   api.extendPackage({
-		eslintConfig,
+    eslintConfig,
     scripts: {
       "test": "npm run test:unit"
     },
@@ -41,29 +41,47 @@ module.exports = (api, options, rootOptions) => {
       'quickfetch': '^0.0.16',
       'normalize.css': '^8.0.1',
     },
+    devDependencies: {
+      "lint-staged": "^8.1.5",
+      "pre-commit": "^1.2.2",
+    },
+    "lint-staged": {
+      "*.js": [
+        "eslint --fix",
+        "git add"
+      ],
+      "*.vue": [
+        "eslint --fix",
+        "git add"
+      ]
+    },
+    "pre-commit": [
+      "lint-staged",
+      "test"
+    ],
     vue: {
-			css: {
-				sourceMap: true
-			},
+      css: {
+        sourceMap: true
+      },
       devServer: {},
-			chainWebpack: (config) => {}
+      chainWebpack: (config) => {}
     }
   })
 
   if (ANSWERS['vue-i18n']) {
     vueI18nHelper(api);
   }
-	if (ANSWERS['element-ui']) { // 要晚于 i18n
+  if (ANSWERS['element-ui']) { // 要晚于 i18n
     eleHelper(api, ANSWERS);
   }
   if (ANSWERS['mock-express']) {
-		expressHelper(api);
+    expressHelper(api);
   }
 
   api.onCreateComplete(() => {
-		configHelper(api);
-		docsHelper(api, 
-			rootOptions.projectName,
-			!!ANSWERS['mock-express']);
+    configHelper(api);
+    docsHelper(api,
+      rootOptions.projectName,
+      !!ANSWERS['mock-express']);
   })
 }
