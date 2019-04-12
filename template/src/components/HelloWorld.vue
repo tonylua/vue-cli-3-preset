@@ -22,8 +22,9 @@
 
 <script>
 import FetchWrapper from '@/utils/fetchWrapper';
-<% if (opt_i18n) { %>
-import VueCookie from 'vue-cookie';<% } %>
+<% if (opt_elementui && opt_i18n) { %>
+import VueCookie from 'vue-cookie';
+<% } %>
 
 export default {
   name: 'HelloWorld',
@@ -35,9 +36,9 @@ export default {
       msg2: null
     }
   },
-  <% if (opt_express) { %>
   mounted() {
-    
+		
+		<% if (opt_express) { %>
     const fetchw = new FetchWrapper({ timeout: 2000 });
 
     fetchw.get('/ajax-api/sample/delay').catch((ex) => {
@@ -59,13 +60,15 @@ export default {
     fetchw.download('GET', '/ajax-api/sample/down', { filename: 'abc' }).then(
       json => {
         if (json.msg) {
-          alert(json.msg);
+          window.alert(json.msg);
         }
       }
     );
+		<% } %>
 
   },
 	methods: {
+		<% if (opt_elementui && opt_i18n) { %>
 		toggleI18n() {
 			let curr = VueCookie.get('lang');
 			if (!curr) curr = 'zh-CN';
@@ -73,10 +76,10 @@ export default {
 			else curr = 'zh-CN';
 			VueCookie.set('lang', curr);
 			// console.log(curr);
-			location.reload();
+			window.location.reload();
 		}
+		<% } %>
 	}
-  <% } %>
 };
 </script>
 
