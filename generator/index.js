@@ -31,7 +31,8 @@ module.exports = (api, options, rootOptions) => {
   api.extendPackage({
     eslintConfig,
     scripts: {
-      "test": "npm run test:unit"
+      "test": "npm run test:unit",
+      "lint-staged": "lint-staged",
     },
     dependencies: {
       'whatwg-fetch': '^3.0.0',
