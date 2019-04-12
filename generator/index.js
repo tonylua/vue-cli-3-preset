@@ -33,6 +33,7 @@ module.exports = (api, options, rootOptions) => {
     scripts: {
       "test": "npm run test:unit",
       "lint-staged": "lint-staged",
+      "build-prod": "vue-cli-service build --mode prod",
     },
     dependencies: {
       'whatwg-fetch': '^3.0.0',
