@@ -54,7 +54,7 @@ module.exports = (api, options, rootOptions) => {
     vueI18nHelper(api);
   }
 	if (ANSWERS['element-ui']) { // 要晚于 i18n
-    eleHelper(api);
+    eleHelper(api, ANSWERS);
   }
   if (ANSWERS['mock-express']) {
 		expressHelper(api);
