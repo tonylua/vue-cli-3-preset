@@ -1,32 +1,31 @@
 const fs = require('fs');
 const path = require('path');
 const eslintConfig = require('./eslint.config');
+const vueI18nHelper = require('./vueI18n.helper');
+const eleHelper = require('./ele.helper');
 const expressHelper = require('./express.helper');
 const docsHelper = require('./docs.helper');
 const configHelper = require('./config.helper');
 
-const epConfig = require('../template/config/config');
-
 module.exports = (api, options, rootOptions) => {
 
-  const promptAnswers = {
-    "vue-i18n": options['I18n'] === 'vue-i18n',
-    "element-ui": options['ui-framework'] === 'element-ui',
-    "local-mock-express": options['local-mock'] === 'express.js'
+  const ANSWERS = {
+    "vue-i18n": options['i18n'] === 'vue-i18n',
+    "element-ui": options['ui'] === 'element-ui',
+    "mock-express": options['mock'] === 'express.js'
   }
 
-	const expectFiles = files => {
+	api.render((files) => {
 		Object.keys(files)
-      .filter(path => path.startsWith('tests/')) // delete unexpect dirs
-      .forEach(path => delete files[path])	
-	}
-	api.render(expectFiles);
+      .filter(path => path.startsWith('tests/'))
+      .forEach(path => delete files[path]) // delete unexpect dirs
+	});
 	
   api.render('../template', {
     'projectName': rootOptions.projectName,
-    'opt_i18n': promptAnswers['vue-i18n'],
-    'opt_express': promptAnswers['local-mock-express'],
-		'opt_elementui': promptAnswers['element-ui']
+    'opt_i18n': ANSWERS['vue-i18n'],
+    'opt_express': ANSWERS['mock-express'],
+		'opt_elementui': ANSWERS['element-ui']
   })
   
   api.extendPackage({
@@ -51,32 +50,13 @@ module.exports = (api, options, rootOptions) => {
     }
   })
 
-  if (promptAnswers['vue-i18n']) {
-    api.extendPackage({
-      dependencies: {
-        'vue-i18n': '^8.4.0',
-				'vue-cookie': '^1.1.4'
-      }
-    })
-    api.render('../custom-deps/vue-i18n')
-    api.injectImports('src/main.js', 
-      `import i18n from './plugins/i18n'`)
+  if (ANSWERS['vue-i18n']) {
+    vueI18nHelper(api);
   }
-
-	if (promptAnswers['element-ui']) { // 要晚于 i18n
-    api.extendPackage({
-      dependencies: {
-        'element-ui': '^2.4.11'
-      }
-    })
-    api.render('../custom-deps/element', {
-      'vuei18n': promptAnswers['vue-i18n']
-    })
-    api.injectImports('src/main.js', 
-      `import './plugins/element'`)
+	if (ANSWERS['element-ui']) { // 要晚于 i18n
+    eleHelper(api);
   }
-
-  if (promptAnswers['local-mock-express']) {
+  if (ANSWERS['mock-express']) {
 		expressHelper(api);
   }
 
@@ -84,6 +64,6 @@ module.exports = (api, options, rootOptions) => {
 		configHelper(api);
 		docsHelper(api, 
 			rootOptions.projectName,
-			!!promptAnswers['local-mock-express']);
+			!!ANSWERS['mock-express']);
   })
 }

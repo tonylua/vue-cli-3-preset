@@ -1,6 +1,6 @@
 module.exports = [
   {
-    name: 'I18n',
+    name: 'i18n',
     type: 'list',
     message: 'choose a I18n Framework',
     choices: [
@@ -16,7 +16,7 @@ module.exports = [
     default: 'none'
   },
   {
-    name: 'ui-framework',
+    name: 'ui',
     type: 'list',
     message: 'choose a UI Framework',
     choices: [
@@ -32,7 +32,7 @@ module.exports = [
     default: 'none'
   },
   {
-    name: 'local-mock',
+    name: 'mock',
     type: 'list',
     message: 'choose a local mock server',
     choices: [
