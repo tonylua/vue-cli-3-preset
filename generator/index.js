@@ -34,6 +34,7 @@ module.exports = (api, options, rootOptions) => {
       "test": "npm run test:unit",
       "lint-staged": "lint-staged",
       "build-prod": "vue-cli-service build --mode prod",
+      "postinstall": "npm rebuild node-sass"
     },
     dependencies: {
       'whatwg-fetch': '^3.0.0',

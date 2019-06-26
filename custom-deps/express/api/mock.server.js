@@ -26,8 +26,18 @@ app.use((req, res, next) => {
 });
 
 let _existRoutes = [];
+const isSavedURLMatch = (p) => {
+  if (~_existRoutes.indexOf(p)) return true;
+  return _existRoutes.some(r => { // look up for route like "/foo/:id"
+    if (!~r.indexOf(':')) return false;
+    const str = r.replace(/:.+?($|\/)/g, '.*?$1')
+      .replace(/(\/{1})/g, '\\$1');
+    const re = new RegExp(`^${str}$`);
+    return re.test(p);
+  });
+};
 app.use((req, res, next) => {
-  if (!~_existRoutes.indexOf(req.path)) {
+  if (!isSavedURLMatch(req.path)) {
     const rURL = originProxyURL.replace(/\/$/, '') + req.url;
     req.pipe(request(rURL)).pipe(res);
     console.log(`本地 mock 未定义的请求，跳转到 ${rURL}`, originProxyURL);

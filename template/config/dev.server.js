@@ -1,7 +1,6 @@
 const config = require('./config');
 
-const { original } = JSON.parse(process.env.npm_config_argv);
-const useLocal = ~original.indexOf('--local');
+const { useLocal } = config;
 
 const { mock } = config;
 

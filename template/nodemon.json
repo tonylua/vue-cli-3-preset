@@ -1,0 +1,9 @@
+{
+  "verbose": false,
+  "watch": [
+    "api/*",
+    "config/*",
+    "nodemon.json"
+  ],
+  "delay": 0
+}
