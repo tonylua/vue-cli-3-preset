@@ -41,7 +41,7 @@ module.exports = (api, options, rootOptions) => {
       'lodash': '^4.17.11',
       'qs': '^6.6.0',
       'file-saver': '^2.0.0',
-      'quickfetch': '^0.0.19',
+      'quickfetch': '^0.0.20',
       'normalize.css': '^8.0.1',
     },
     devDependencies: {
