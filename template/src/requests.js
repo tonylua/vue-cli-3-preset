@@ -1,14 +1,10 @@
 import Wrapper from '@/utils/fetchWrapper';
 
-const fetchWrapper = new Wrapper();
+const fetchWrapper = new Wrapper({ timeout: 2000 });
 
-/**
- * 指示请求不触发通用提示的header字段
- * @param {String} scope - 'all' | 'success'
- */
-const noWarnHeader = (scope = 'all') => ({
-  'no-global-config-warn': scope
-});
+// const noWarnHeader = (scope = 'all') => ({
+//   'no-global-config-warn': scope
+// });
 
 export const testDelay = () => fetchWrapper.get(
   '/sample/delay',

@@ -6,7 +6,7 @@ module.exports = function(app) {
   app.get('/ajax-api/sample/info', (req, res)=>{
     res.json({
       code: 0,
-      msg: 'ok',
+      message: 'ok',
       data: {
         hello: 'everyone!'
       }
@@ -30,7 +30,7 @@ module.exports = function(app) {
   app.get('/ajax-api/sample/wrong', (req, res)=>{
     res.status(200).json({
       code: 123,
-      msg: 'wrong!' 
+      message: 'wrong!' 
     })
   });
 
@@ -58,7 +58,7 @@ module.exports = function(app) {
       
       res.json({
         code: 678,
-        msg: "download fail!"
+        message: "download fail!"
       });
 
     }, 500);

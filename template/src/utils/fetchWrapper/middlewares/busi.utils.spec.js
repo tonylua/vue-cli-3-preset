@@ -1,3 +1,4 @@
+/* eslint-disable */
 const { getErrorTip } = require('./busi.utils');
 
 global.Headers = function(cfg) {

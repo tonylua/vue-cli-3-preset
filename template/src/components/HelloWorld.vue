@@ -45,7 +45,6 @@ export default {
   mounted() {
 		
 		<% if (opt_express) { %>
-    const fetchw = new FetchWrapper({ timeout: 2000 });
 
     testDelay().catch((ex) => {
       console.log('time out', ex);
@@ -56,8 +55,6 @@ export default {
     testBusiness();
 
     getInfo().then(
-      res => res.json()
-    ).then(
       json => {
         this.msg2 = json.data.hello
       }
@@ -65,8 +62,8 @@ export default {
 
     downFile('abc').then(
       json => {
-        if (json.msg) {
-          window.alert(json.msg);
+        if (json.message) {
+          window.alert(json.message);
         }
       }
     );

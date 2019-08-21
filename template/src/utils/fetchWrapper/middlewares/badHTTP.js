@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import QuickFetch from 'quickfetch';
-import router from '@/router/router';
+// import router from '@/router/router';
 import CustomError from '../CustomError';
 
 const ERROR_HTTP = 'ERROR_HTTP';
@@ -70,7 +70,7 @@ export default function useBadHTTPMiddleware(r) {
       if (message) {
         r._errTimeout = setTimeout(() => {
           // Vue.prototype.$message.error(message);
-          alert($message);
+          alert(message);
         }, 500);
       }
     }
