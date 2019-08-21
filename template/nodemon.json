@@ -4,6 +4,5 @@
     "api/*",
     "config/*",
     "nodemon.json"
-  ],
-  "delay": 0
+  ]
 }

@@ -38,6 +38,11 @@ npm run test
 npm run serve
 ```
 
+### Compiles and hot-reloads for development, use your local IP
+```
+npm run serve --ip=xxx.xxx.xxx.xxx
+```
+
 <!--LOCAL_EXPRESS?-->
 
 ### Customize configuration

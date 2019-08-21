@@ -14,9 +14,12 @@ const proxy = config.proxy.reduce((rst, p) => {
 		changeOrigin: true
 	};
 	if (rewrite && rewrite.need) {
+		// 加入了prefix，区分支持 /api 和 /xapi2 等不同的前缀
+    // 对应要求 mock 接口中也应写明前缀
+		const path = `${mock.port}/${prefix}`.replace(/\/+/g, '/');
 		const rewritePath = useLocal && rewrite.local
-			? `http://${mock.host}:${mock.port}`
-			: target;
+		  ? `http://${mock.host}:${path}`
+		  : target;
 		cfg.pathRewrite = {
 			[`^${prefix}`]: rewritePath
 		}
