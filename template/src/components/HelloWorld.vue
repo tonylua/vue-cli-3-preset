@@ -21,10 +21,16 @@
 </template>
 
 <script>
-import FetchWrapper from '@/utils/fetchWrapper';
 <% if (opt_elementui && opt_i18n) { %>
 import VueCookie from 'vue-cookie';
 <% } %>
+import {
+  testDelay,
+  testHttp,
+  testBusiness,
+  getInfo,
+  downFile
+} from '@/requests';
 
 export default {
   name: 'HelloWorld',
@@ -41,15 +47,15 @@ export default {
 		<% if (opt_express) { %>
     const fetchw = new FetchWrapper({ timeout: 2000 });
 
-    fetchw.get('/ajax-api/sample/delay').catch((ex) => {
+    testDelay().catch((ex) => {
       console.log('time out', ex);
     });
 
-    fetchw.get('/ajax-api/sample/bad', null, { catchError: false });
+    testHttp();
 
-    fetchw.get('/ajax-api/sample/wrong');
+    testBusiness();
 
-    fetchw.get('/ajax-api/sample/info').then(
+    getInfo().then(
       res => res.json()
     ).then(
       json => {
@@ -57,7 +63,7 @@ export default {
       }
     );
 
-    fetchw.download('GET', '/ajax-api/sample/down', { filename: 'abc' }).then(
+    downFile('abc').then(
       json => {
         if (json.msg) {
           window.alert(json.msg);
