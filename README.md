@@ -1,7 +1,7 @@
 # vue cli 3 preset
 
 ```
-vue create --preset tonylua/vue-cli-3-preset-2019 <YOUR_PROJECT_NAME>
+vue create --preset tonylua/vue-cli-3-preset <YOUR_PROJECT_NAME>
 ```
 
 - [x] ui
