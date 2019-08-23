@@ -63,25 +63,21 @@ const Wrapper = function(option) {
   ['get', 'post', 'delete', 'put', 'patch'].forEach((method) => {
     const originFunc = r[method];
     r[method] = function(...args) {
-      r._args = args;
-
+      const fetchId = `r${Date.now()}`;
+      if (args.length > 2) args[2].fetchId = fetchId;
       const [a, b, roption] = args;
       if (roption && roption.ignoreBusiCheck) {
-        // 忽略特殊请求的业务逻辑码检查
-        wrongBusiMiddleware.pause();
+        // 在特殊请求的第3个参数中设置ignoreBusiCheck，忽略业务逻辑码检查
+        wrongBusiMiddleware.pause(fetchId);
         console.log('ignore business code check', a);
-      } else {
-        wrongBusiMiddleware.resume();
-        // console.log('resume business code check', a);
       }
       if (roption && roption.ignoreHTTPCheck) {
-        // 忽略特殊请求的http检查
-        badHttpMiddleware.pause();
+        // 在特殊请求的第3个参数中设置ignoreHTTPCheck，忽略http检查
+        badHttpMiddleware.pause(fetchId);
         console.log('ignore http check', a);
-      } else {
-        badHttpMiddleware.resume();
-        // console.log('resume http check', a);
       }
+      
+      r._args = args;
 
       return originFunc.apply(r, args)
         .then(async (res) => {
