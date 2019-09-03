@@ -11,6 +11,11 @@ import useWrongBusiMiddleware from './middlewares/wrongBusiness';
  */
 const TIMEOUT = 30000;
 
+/**
+ * 用于在路由切换时中断不必要的请求
+ */
+window.abortControllers = {};
+
 const Wrapper = function(option) {
   const r = new QuickFetch(mergeWith({
     timeout: TIMEOUT,
@@ -63,9 +68,22 @@ const Wrapper = function(option) {
   ['get', 'post', 'delete', 'put', 'patch'].forEach((method) => {
     const originFunc = r[method];
     r[method] = function(...args) {
+      // eslint-disable-next-line prefer-const
+      let [a, b, roption] = args;
+      
       const fetchId = `r${Date.now()}`;
-      if (args.length > 2) args[2].fetchId = fetchId;
-      const [a, b, roption] = args;
+      // eslint-disable-next-line no-multi-assign
+      if (!b) args[1] = b = null;
+      // eslint-disable-next-line no-multi-assign
+      if (!roption) args[2] = roption = {};
+      args[2].fetchId = fetchId;
+      
+      if (!roption.ignoreAbortBeforeRoute) {
+        const ac = new AbortController();
+        args[2].signal = ac.signal;
+        window.abortControllers[fetchId] = ac;
+      }
+      
       if (roption && roption.ignoreBusiCheck) {
         // 在特殊请求的第3个参数中设置ignoreBusiCheck，忽略业务逻辑码检查
         wrongBusiMiddleware.pause(fetchId);
@@ -84,6 +102,7 @@ const Wrapper = function(option) {
           if (res instanceof Error) {
             return Promise.reject(res);
           }
+          delete window.abortControllers[args[2].fetchId];
           const resJson = await res.json();
           return resJson;
         });

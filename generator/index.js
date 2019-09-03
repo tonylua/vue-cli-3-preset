@@ -6,6 +6,7 @@ const eleHelper = require('./ele.helper');
 const expressHelper = require('./express.helper');
 const docsHelper = require('./docs.helper');
 const configHelper = require('./config.helper');
+const routerHelper = require('./router.helper');
 
 module.exports = (api, options, rootOptions) => {
 
@@ -82,6 +83,7 @@ module.exports = (api, options, rootOptions) => {
   }
 
   api.onCreateComplete(() => {
+    routerHelper(api);
     configHelper(api);
     docsHelper(api,
       rootOptions.projectName,
