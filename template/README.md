@@ -1,12 +1,6 @@
 # preset for vue cli 3
 
-## How to use?
-
-```
-vue create --preset tonylua/vue-cli-3-preset-2019 your-project
-```
-
-## Commands
+## NPM Commands
 
 ### Project setup
 ```
@@ -18,7 +12,12 @@ npm install
 npm run build
 ```
 
-### Run your tests
+### Compiles and open bundle size report
+```
+npm run build --report
+```
+
+### Run your unit tests
 ```
 npm run test
 ```
@@ -38,12 +37,14 @@ npm run test
 npm run serve
 ```
 
-### Compiles and hot-reloads for development, use your local IP
+### Compiles and hot-reloads for development, use local IP instead of localhost
 ```
 npm run serve --ip=xxx.xxx.xxx.xxx
 ```
 
 <!--LOCAL_EXPRESS?-->
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Docker 
+
+- `docker build -t <DOCKER_USERNAME>/myproject .`
+- `docker run -p 48081:8081 -d <DOCKER_USERNAME>/myproject`

@@ -38,16 +38,16 @@ module.exports = (api, options, rootOptions) => {
       "postinstall": "npm rebuild node-sass"
     },
     dependencies: {
-      'whatwg-fetch': '^3.0.0',
-      'lodash': '^4.17.11',
-      'qs': '^6.6.0',
-      'file-saver': '^2.0.0',
-      'quickfetch': '^0.0.20',
-      'normalize.css': '^8.0.1',
+      'qs': '^6.6.0'
     },
     devDependencies: {
+      'whatwg-fetch': '^3.0.0',
+      'lodash': '^4.17.11',
       "lint-staged": "^8.1.5",
       "pre-commit": "^1.2.2",
+      'file-saver': '^2.0.0',
+      'quickfetch': '^0.0.22',
+      'normalize.css': '^8.0.1',
     },
     "lint-staged": {
       "*.js": [

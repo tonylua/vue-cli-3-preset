@@ -1,49 +1,54 @@
-const { original } = JSON.parse(process.env.npm_config_argv);
-const useLocal = ~original.indexOf('--local');
-const appIp = (function() {
-  const ipCmd = original.filter(item => /\-\-ip\=((\d{1,3}\.?){4})/.test(item));
-  if (!ipCmd.length) return null;
-  return RegExp.$1;
-}());
+const original = process.env.npm_config_argv
+  ? JSON.parse(process.env.npm_config_argv).original
+  : '';
+const useLocal = !!~original.indexOf('--local')
+  || !!~process.argv.indexOf('--local');
+const appIp = process.env.npm_config_ip;
+
+const appConfig = {
+  host: appIp || 'localhost',
+  port: 8080,
+};
+
+const mockConfig = {
+  host: appIp || 'localhost',
+  port: 8090,
+};
+
+let proxyMap = [
+  {
+    // need manual sync in `/src/utils/fetchWrapper/middlewares/headers.js`
+    prefixs: ['/ajax-api'],
+    target: 'https://www.mocky.io/v2/5185415ba171ea3a00704eed'
+  },
+  // ...more proxies
+];
+if (useLocal) {
+  proxyMap = proxyMap.map(p => ({
+    prefixs: p.prefixs,
+    target: `http://${mockConfig.host}:${mockConfig.port}`
+  }));
+}
 
 module.exports = {
-	app: {
-		host: appIp || 'localhost', // or 'local.xxx.com' for 127.0.0.1 in your hosts,
-		port: 8080,
-	},
-	mock: {
-		host: appIp || 'localhost',
-		port: 8090,
-	},
-  proxy: [
-    {
-			forMock: true,
-      target: 'https://www.mocky.io/v2/5185415ba171ea3a00704eed',
-      prefix: '/ajax-api',
-			rewrite: {
-				need: useLocal,  // rewrite `prefix` to `target`; maybe due to `useLocal`
-				local: true // use local express to replace `target`
-			}
-    },
-    // {
-    // 	forMock: true,
-    //   target: 'https://another/path',
-    //   prefix: '/ajax-api/special',
-    // 	rewrite: {
-    // 		need: useLocal,
-    // 		local: true
-    // 	}
-    // },
-    // {
-    //   forMock: true,
-    //   target: 'http://foo/bar',
-    //   prefix: '/xapi2',
-    //   rewrite: {
-    //     need: useLocal,
-    //     local: true
-    //   }
-    // },
-    // ... other non-local proxies (forMock = false)
-  ],
-  useLocal
+  app: appConfig,
+  mock: mockConfig,
+  proxy: proxyMap.reduce((result, map) => {
+    const { target, prefixs } = map;
+    for (let i = 0; i < prefixs.length; i++) {
+      result.push({
+        forMock: true,
+        target,
+        prefix: prefixs[i],
+        rewrite: {
+          need: useLocal,
+          local: true
+        }
+      });
+    }
+    return result;
+  }, []),
+  useLocal,
+  appIp,
+  proxyMap
 };

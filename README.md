@@ -14,3 +14,4 @@ vue create --preset tonylua/vue-cli-3-preset <YOUR_PROJECT_NAME>
 - [x] directives
 - [x] mixins
 - [x] filters
+- [x] Dockerfile

@@ -84,14 +84,15 @@ const Wrapper = function(option) {
         window.abortControllers[fetchId] = ac;
       }
       
-      if (roption && roption.ignoreBusiCheck) {
-        // 在特殊请求的第3个参数中设置ignoreBusiCheck，忽略业务逻辑码检查
+      if (roption.ignoreBusiCheck) {
+        // 忽略kube等特殊请求的业务逻辑码检查
         wrongBusiMiddleware.pause(fetchId);
         console.log('ignore business code check', a);
       }
-      if (roption && roption.ignoreHTTPCheck) {
-        // 在特殊请求的第3个参数中设置ignoreHTTPCheck，忽略http检查
+      if (roption.ignoreHTTPCheck) {
+        // 忽略消息轮询等请求的http检查
         badHttpMiddleware.pause(fetchId);
+        useBadHTTPMiddleware(r, true, fetchId);
         console.log('ignore http check', a);
       }
       

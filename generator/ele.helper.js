@@ -1,6 +1,6 @@
 module.exports = (api, ANSWERS) => {
 	api.extendPackage({
-	  dependencies: {
+	  devDependencies: {
 	    'element-ui': '^2.4.11'
 	  }
 	});

@@ -7,12 +7,14 @@ module.exports = (api) => {
 	    "express": "nodemon api/mock.server.js",
 	    "servelocal": "shell-exec --colored-output \"npm run serve --local\" \"npm run express\""
 	  },
+    dependencies: {
+	    'request': '^2.88.0',
+	    'express': '^4.16.4',
+	    'body-parser': '^1.18.3'
+    },
 	  devDependencies: {
 	    'nodemon': '^1.18.7',
 	    'klaw-sync': '^6.0.0',
-	    'request': '^2.88.0',
-	    'express': '^4.16.4',
-	    'body-parser': '^1.18.3',
 	    'shell-executor': '^6.0.1'
 	  }
 	})
