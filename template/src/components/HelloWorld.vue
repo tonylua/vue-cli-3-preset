@@ -1,7 +1,9 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <h2>hello {{ msg2 }}</h2>
+    <h2>
+      <hello-text :text="msg2">
+    </h2>
 		<% if (opt_elementui && opt_i18n) { %>
 		<el-button @click="toggleI18n">{{ $t('toggle') }} i18n</el-button>
 		<% } %>
@@ -31,9 +33,13 @@ import {
   getInfo,
   downFile
 } from '@/requests';
+import HelloText from '@/components/HelloText';
 
 export default {
   name: 'HelloWorld',
+  components: {
+    HelloText
+  },
   props: {
     msg: String,
   },

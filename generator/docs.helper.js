@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-module.exports = (api, projectName, mock = false) => {
+module.exports = (api, projectName, mock = false, storybook = true) => {
 	// copy CHANGELOG
 	fs.copyFileSync(
 	  path.resolve(__dirname, '../template/CHANGELOG.md'),
@@ -20,7 +20,12 @@ module.exports = (api, projectName, mock = false) => {
 	        mock
 	          ? '### Compiles and local mock server for development\n```\nnpm run servelocal\n```'
 	          : ''
-	      )
+	      ).replace(
+          '<!--STORYBOOK?-->',
+          storybook
+            ? '### Run or Build Storybook\n```npm run storybook\nnpm run build-storybook```'
+            : ''
+        )
 	  )
 	}, 2000);
 };

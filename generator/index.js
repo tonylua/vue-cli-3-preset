@@ -7,13 +7,14 @@ const expressHelper = require('./express.helper');
 const docsHelper = require('./docs.helper');
 const configHelper = require('./config.helper');
 const routerHelper = require('./router.helper');
+const storybookHelper = require('./storybook.helper');
 
 module.exports = (api, options, rootOptions) => {
-
   const ANSWERS = {
     "vue-i18n": options['i18n'] === 'vue-i18n',
     "element-ui": options['ui'] === 'element-ui',
-    "mock-express": options['mock'] === 'express.js'
+    "mock-express": options['mock'] === 'express.js',
+    "storybook": options['storybook']
   }
 
   api.render((files) => {
@@ -27,7 +28,7 @@ module.exports = (api, options, rootOptions) => {
     'opt_i18n': ANSWERS['vue-i18n'],
     'opt_express': ANSWERS['mock-express'],
     'opt_elementui': ANSWERS['element-ui']
-  })
+  });
 
   api.extendPackage({
     eslintConfig,
@@ -70,7 +71,7 @@ module.exports = (api, options, rootOptions) => {
       devServer: {},
       chainWebpack: (config) => {}
     }
-  })
+  });
 
   if (ANSWERS['vue-i18n']) {
     vueI18nHelper(api);
@@ -81,12 +82,16 @@ module.exports = (api, options, rootOptions) => {
   if (ANSWERS['mock-express']) {
     expressHelper(api);
   }
+  if (ANSWERS['storybook']) {
+    storybookHelper(api, ANSWERS);
+  }
 
   api.onCreateComplete(() => {
     routerHelper(api);
     configHelper(api);
     docsHelper(api,
       rootOptions.projectName,
-      !!ANSWERS['mock-express']);
+      !!ANSWERS['mock-express'],
+      ANSWERS['storybook']);
   })
 }

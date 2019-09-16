@@ -44,6 +44,8 @@ npm run serve --ip=xxx.xxx.xxx.xxx
 
 <!--LOCAL_EXPRESS?-->
 
+<!--STORYBOOK?-->
+
 ### Docker 
 
 - `docker build -t <DOCKER_USERNAME>/myproject .`

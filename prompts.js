@@ -46,5 +46,11 @@ module.exports = [
       }
     ],
     default: 'none'
+  },
+  {
+    name: 'storybook',
+    type: 'confirm',
+    message: 'use storybook?',
+    default: true
   }
-]
+];
