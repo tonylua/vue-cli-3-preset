@@ -48,5 +48,5 @@ npm run serve --ip=xxx.xxx.xxx.xxx
 
 ### Docker 
 
-- `docker build -t <DOCKER_USERNAME>/myproject .`
+- `npm run build && docker build -t <DOCKER_USERNAME>/myproject .`
 - `docker run -p 48081:8081 -d <DOCKER_USERNAME>/myproject`
