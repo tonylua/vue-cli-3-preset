@@ -9,13 +9,11 @@ WORKDIR /usr/src/myproject
 
 COPY ./package.json ./
 COPY ./config/config.js ./config/ 
-COPY ./dist/ ./
+COPY ./dist/ ./dist/
 
 RUN npm install --only=prod --registry=https://registry.npm.taobao.org \
  --ignore-scripts --silent --no-audit --no-progress && \
  npm cache clear --force --silent
-
-COPY . .
 
 EXPOSE 8081
 CMD [ "node", "/usr/src/myproject/dist/server.js" ]
