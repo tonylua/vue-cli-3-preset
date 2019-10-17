@@ -8,7 +8,7 @@ module.exports = (api, ANSWERS) => {
       "babel-core": "7.0.0-bridge.0",
       "babel-preset-vue": "^2.0.2",
       "node-sass": "^4.9.0",
-      "sass-loader": "^7.1.0",
+      "sass-loader": "^8.0.0",
       "vue-loader": "^15.7.0",
       "vue-style-loader": "^4.1.2",
       "vue-template-compiler": "^2.6.10",

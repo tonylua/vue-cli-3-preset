@@ -2,7 +2,7 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
     <h2>
-      <hello-text :text="msg2">
+      <hello-text :text="msg2" />
     </h2>
 		<% if (opt_elementui && opt_i18n) { %>
 		<el-button @click="toggleI18n">{{ $t('toggle') }} i18n</el-button>
