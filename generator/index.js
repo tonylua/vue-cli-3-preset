@@ -47,7 +47,7 @@ module.exports = (api, options, rootOptions) => {
       "lint-staged": "^8.1.5",
       "pre-commit": "^1.2.2",
       'file-saver': '^2.0.0',
-      'quickfetch': '^0.0.22',
+      'quickfetch': '^0.0.23',
       'normalize.css': '^8.0.1',
     },
     "lint-staged": {
