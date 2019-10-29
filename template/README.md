@@ -1,4 +1,4 @@
-# preset for vue cli 3
+# preset for vue cli 4
 
 ## NPM Commands
 

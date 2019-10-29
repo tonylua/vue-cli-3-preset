@@ -1,4 +1,4 @@
-import { mergeWith } from 'lodash';
+import { mergeWith, findIndex } from 'lodash';
 import saveAs from 'file-saver';
 import QuickFetch from 'quickfetch';
 import useHeadersMiddleware from './middlewares/headers';
@@ -13,8 +13,9 @@ const TIMEOUT = 30000;
 
 /**
  * 用于在路由切换时中断不必要的请求
+ * @see src/router/util::abortPeddingFetches()
  */
-window.abortControllers = {};
+window.abortFetchIds = [];
 
 const Wrapper = function(option) {
   const r = new QuickFetch(mergeWith({
@@ -22,6 +23,10 @@ const Wrapper = function(option) {
     baseURL: '/ajax-api',
     ignoreBodyMethods: ['get', 'head', 'delete']
   }, option));
+  
+  r.addEventListener(QuickFetch.EVENT_FETCH_ABORT, e => {
+    console.log('fetch abort', e.detail.fetchId);
+  });
 
   useHeadersMiddleware(r);
   useTimeoutMiddleware(r);
@@ -79,13 +84,11 @@ const Wrapper = function(option) {
       args[2].fetchId = fetchId;
       
       if (!roption.ignoreAbortBeforeRoute) {
-        const ac = new AbortController();
-        args[2].signal = ac.signal;
-        window.abortControllers[fetchId] = ac;
+        window.abortFetchIds.push(fetchId);
       }
       
       if (roption.ignoreBusiCheck) {
-        // 忽略kube等特殊请求的业务逻辑码检查
+        // 忽略特殊请求的业务逻辑码检查
         wrongBusiMiddleware.pause(fetchId);
         console.log('ignore business code check', a);
       }
@@ -103,7 +106,10 @@ const Wrapper = function(option) {
           if (res instanceof Error) {
             return Promise.reject(res);
           }
-          delete window.abortControllers[args[2].fetchId];
+          
+          const fidx = findIndex(window.abortFetchIds, id => id === args[2].fetchId);
+          if (fidx > -1) window.abortFetchIds.splice(fidx, 1);
+          
           const resJson = await res.json();
           return resJson;
         });

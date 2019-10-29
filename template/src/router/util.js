@@ -1,3 +1,5 @@
+import QuickFetch from 'quickfetch';
+
 /**
  * 根据路由信息，改变浏览器标题
  * @example 如原title为“MySite”，切换页面后显示“MySite | Home”
@@ -21,14 +23,12 @@ export const updateBodyClass = (path) => {
 
 /**
  * 中断未完成的不必要请求
+ * @see src/utils/fetchWrapper/index.js
  */
 export const abortPeddingFetches = () => {
-  // define in src/utils/fetchWrapper/index.js
-  const controllers = window.abortControllers;
-  const fetchIds = Object.keys(controllers);
-  fetchIds.forEach(id => {
-    controllers[id].abort();
-    delete window.abortControllers[id];
-    console.log('abort fetch', id);
+  const fetchIds = window.abortFetchIds;
+  fetchIds.forEach((fid, index) => {
+    QuickFetch.abort(fid);
+    window.abortFetchIds.splice(index, 1);
   });
 };

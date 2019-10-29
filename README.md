@@ -10,6 +10,7 @@ vue create --preset tonylua/vue-cli-3-preset <YOUR_PROJECT_NAME>
 - [x] i18n
 - [x] local mock server
 - [x] fetch polyfill
+- [x] fetch abort
 - [x] fetchWrapper: common logic
 - [x] fetchWrapper: support timeout
 - [x] fetchWrapper: support download
