@@ -32,6 +32,7 @@ const proxy = config.proxy.reduce((rst, p) => {
 
 module.exports = {
   open: true,
+  progress: false,
   port: config.app.port,
   host: config.app.host,
   proxy
