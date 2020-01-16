@@ -20,6 +20,10 @@ Object.keys(directives).forEach(key=>{
 
 Vue.config.productionTip = false;
 
+<% if (opt_compositionapi) { %>
+Vue.use(VueCompositionApi);
+<% } %>
+
 new Vue({
   <% if (opt_i18n) { %>
   i18n,

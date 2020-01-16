@@ -1,5 +1,11 @@
 module.exports = [
   {
+    name: 'composition-api',
+    type: 'confirm',
+    message: 'introduce Vue3 Composition-API?',
+    default: true
+  },
+  {
     name: 'i18n',
     type: 'list',
     message: 'choose a I18n Framework',

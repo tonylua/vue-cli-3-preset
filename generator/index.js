@@ -8,9 +8,11 @@ const docsHelper = require('./docs.helper');
 const configHelper = require('./config.helper');
 const routerHelper = require('./router.helper');
 const storybookHelper = require('./storybook.helper');
+const compositionHelper = require('./composition.helper');
 
 module.exports = (api, options, rootOptions) => {
   const ANSWERS = {
+    "composition-api": options['composition-api'],
     "vue-i18n": options['i18n'] === 'vue-i18n',
     "element-ui": options['ui'] === 'element-ui',
     "mock-express": options['mock'] === 'express.js',
@@ -25,6 +27,7 @@ module.exports = (api, options, rootOptions) => {
 
   api.render('../template', {
     'projectName': rootOptions.projectName,
+    'opt_compositionapi': ANSWERS['composition-api'],
     'opt_i18n': ANSWERS['vue-i18n'],
     'opt_express': ANSWERS['mock-express'],
     'opt_elementui': ANSWERS['element-ui']
@@ -73,6 +76,9 @@ module.exports = (api, options, rootOptions) => {
     }
   });
 
+  if (ANSWERS['composition-api']) {
+    compositionHelper(api);
+  }
   if (ANSWERS['vue-i18n']) {
     vueI18nHelper(api);
   }
