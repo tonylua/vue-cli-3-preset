@@ -1,19 +1,16 @@
-FROM node:10-alpine
+# stage 0
+FROM node:10-alpine as build-stage
+WORKDIR /app
+COPY package*.json ./
+ENV SASS_BINARY_SITE https://npm.taobao.org/mirrors/node-sass/
+RUN npm install --registry=https://registry.npm.taobao.org
+COPY . .
+ARG ENDPOINT='http://api.com:30590'
+RUN npm run build-prod --silent --endpoint=$ENDPOINT
 
-RUN mkdir /usr/src && \
-  mkdir /usr/src/myproject && \
-  mkdir /usr/src/myproject/config && \
-  cd /usr/src/myproject
-
-WORKDIR /usr/src/myproject
-
-COPY ./package.json ./
-COPY ./config/config.js ./config/ 
-COPY ./dist/ ./dist/
-
-RUN npm install --only=prod --registry=https://registry.npm.taobao.org \
- --ignore-scripts --silent --no-audit --no-progress && \
- npm cache clear --force --silent
-
+# stage 1 (nginx)
+FROM nginx:1.17-alpine
+COPY config/nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build-stage /app/dist /usr/share/nginx/html
 EXPOSE 8081
-CMD [ "node", "/usr/src/myproject/dist/server.js" ]
+CMD ["nginx", "-g", "daemon off;"]

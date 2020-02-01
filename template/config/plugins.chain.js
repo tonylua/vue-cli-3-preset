@@ -1,7 +1,14 @@
 const webpack = require('webpack');
 
+const { BUILD_ENV, npm_config_endpoint } = process.env;
+
 module.exports = (config) => {
   // global vars & so on...
+  config.plugin('define-globals')
+    .use(webpack.DefinePlugin, [{
+      BUILD_CHAIN_ENDPOINT: BUILD_ENV === 'prod' ? `'${npm_config_endpoint}'` : void(0),
+    }]);
+  // 别名
   config.plugin('provide')
     .use(webpack.ProvidePlugin, [{
       //'$': 'jquery',

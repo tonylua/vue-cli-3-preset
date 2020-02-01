@@ -4,6 +4,7 @@ const original = process.env.npm_config_argv
 const useLocal = !!~original.indexOf('--local')
   || !!~process.argv.indexOf('--local');
 const appIp = process.env.npm_config_ip;
+const apiEndpoint = process.env.npm_config_endpoint;
 
 const appConfig = {
   host: appIp || 'localhost',
@@ -19,7 +20,7 @@ let proxyMap = [
   {
     // need manual sync in `/src/utils/fetchWrapper/middlewares/headers.js`
     prefixs: ['/ajax-api'],
-    target: 'https://www.mocky.io/v2/5185415ba171ea3a00704eed'
+    target: apiEndpoint || 'https://www.mocky.io/v2/5185415ba171ea3a00704eed'
   },
   // ...more proxies
 ];

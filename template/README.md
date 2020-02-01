@@ -48,5 +48,6 @@ npm run serve --ip=xxx.xxx.xxx.xxx
 
 ### Docker 
 
-- `npm run build --silent && docker build -t <DOCKER_USERNAME>/myproject .`
-- `docker run -p 48081:8081 -d <DOCKER_USERNAME>/myproject`
+- Edit `listen` and `server_name` in `/config/nginx.conf`
+- `docker build --build-arg ENDPOINT='API_PROTOCAL://API_HOST:API_PORT' -t IMAGE_NAME .`
+- `docker run -p 48081:8081 -d IMAGE_NAME`

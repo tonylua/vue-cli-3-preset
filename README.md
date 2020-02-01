@@ -19,3 +19,4 @@ vue create --preset tonylua/vue-cli-3-preset <YOUR_PROJECT_NAME>
 - [x] filters
 - [x] Storybook
 - [x] Dockerfile
+- [x] Nginx Static Server & gzip

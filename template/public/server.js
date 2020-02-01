@@ -8,8 +8,21 @@ const config = require('../config/config');
 
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0; // eslint-disable-line
 
-const SERVER_PORT = '8081';
-const SERVER_HOST = '0.0.0.0';
+// 映射命令行参数
+const argRe = /^\-{1,2}([a-z]+?)=(.*)$/;
+const argsMap = process.argv.splice(2).reduce(
+  (map, argStr) => {
+    if (argRe.test(argStr)) {
+      const [_, key, value] = argStr.match(argRe);
+      map[key] = value;
+    }
+    return map;
+  },
+  Object.create(null)
+);
+
+const SERVER_PORT = argsMap.ip || '8081';
+const SERVER_HOST = argsMap.host || '0.0.0.0';
 const HOME_PAGE = 'index.html';
 
 const app = new express;

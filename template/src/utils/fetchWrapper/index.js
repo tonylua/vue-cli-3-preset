@@ -20,6 +20,7 @@ window.abortFetchIds = [];
 const Wrapper = function(option) {
   const r = new QuickFetch(mergeWith({
     timeout: TIMEOUT,
+    endpoint: BUILD_CHAIN_ENDPOINT, // see '/config/plugins.chain.js'
     baseURL: '/ajax-api',
     ignoreBodyMethods: ['get', 'head', 'delete']
   }, option));
