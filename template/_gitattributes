@@ -1,4 +1,4 @@
 *.js    eol=lf
 *.sass  eof=lf
 *.vue   eof=lf
-*,md    eof=lf
+*.md    eof=lf
