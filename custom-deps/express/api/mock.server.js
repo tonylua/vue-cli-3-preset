@@ -6,6 +6,18 @@ const path = require('path');
 const walk = require('klaw-sync');
 const config = require('../config/config');
 
+const argRe = /^\-{1,2}([a-z]+?)=(.*)$/;
+const argsMap = process.argv.splice(2).reduce(
+  (map, argStr) => {
+    if (argRe.test(argStr)) {
+      const [_, key, value] = argStr.match(argRe);
+      map[key] = value;
+    }
+    return map;
+  },
+  Object.create(null)
+);
+
 const {
   mock,
   proxy
@@ -21,9 +33,11 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Origin', argsMap.mockorigin || '*');
   res.header('Access-Control-Allow-Headers',
     'Origin, X-Requested-With, Content-Type, Accept, hci-secret-key, x-api-key');
+  res.header('Access-Control-Allow-Methods', 'POST, OPTIONS, GET');
+  res.header('Access-Control-Allow-Credentials', true);
   next();
 });
 
@@ -88,6 +102,6 @@ walk(path.resolve('./'))
 _existRoutes = app._router.stack.filter(s => s.route).map(s => s.route.path);
 console.log(_existRoutes.sort());
 
-app.listen(mock.port, mock.host, () => {
-  console.log(`\n\n Local server running at: http://${mock.host}:${mock.port} \n\n`);
+app.listen(argsMap.mockport || mock.port, mock.host, () => {
+  console.log(`\n\n Local server running at: http://${mock.host}:${argsMap.mockport || mock.port} \n\n`);
 });
