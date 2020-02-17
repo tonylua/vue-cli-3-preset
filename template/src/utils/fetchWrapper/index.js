@@ -19,8 +19,9 @@ window.abortFetchIds = [];
 
 const Wrapper = function(option) {
   const r = new QuickFetch(mergeWith({
-    timeout: TIMEOUT,
+    // eslint-disable-next-line no-undef
     endpoint: BUILD_CHAIN_ENDPOINT, // see '/config/plugins.chain.js'
+    timeout: TIMEOUT,
     baseURL: '/ajax-api',
     ignoreBodyMethods: ['get', 'head', 'delete']
   }, option));

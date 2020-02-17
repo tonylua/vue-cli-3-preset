@@ -27,6 +27,7 @@ module.exports = {
     'no-restricted-syntax': 'warn',
     'arrow-parens': 'off',
     'import/extensions': 'off',
+    'import/order': 'off',
     'import/no-extraneous-dependencies': 'off'
   },
   globals: {

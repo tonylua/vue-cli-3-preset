@@ -5,7 +5,7 @@ module.exports = (api) => {
 			'vue-cookie': '^1.1.4'
 	  }
 	});
-	api.render('../custom-deps/vue-i18n');
+	api.render('../../custom-deps/vue-i18n');
 	api.injectImports('src/main.js', 
 	  `import i18n from './plugins/i18n'`);
 };

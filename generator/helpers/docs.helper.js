@@ -4,7 +4,7 @@ const path = require('path');
 module.exports = (api, projectName, mock = false, storybook = true) => {
 	// copy CHANGELOG
 	fs.copyFileSync(
-	  path.resolve(__dirname, '../template/CHANGELOG.md'),
+	  path.resolve(__dirname, '../../template/CHANGELOG.md'),
 	  api.resolve('./CHANGELOG.md')
 	);
 	// rewrite README
@@ -13,7 +13,7 @@ module.exports = (api, projectName, mock = false, storybook = true) => {
 	    api.resolve('./README.md'),
 	    `# ${projectName} \n\n---\n`
 	      + fs.readFileSync(
-	        path.resolve(__dirname, '../template/README.md'),
+	        path.resolve(__dirname, '../../template/README.md'),
 	        {encoding: 'utf-8'}
 	      ).replace(
 	        '<!--LOCAL_EXPRESS?-->',

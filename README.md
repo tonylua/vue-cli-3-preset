@@ -20,3 +20,5 @@ vue create --preset tonylua/vue-cli-3-preset <YOUR_PROJECT_NAME>
 - [x] Storybook
 - [x] Dockerfile
 - [x] Nginx Static Server & gzip
+- [x] ES6 nullish-coalescing-operator
+- [x] ES6 optional-chaining

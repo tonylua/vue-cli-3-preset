@@ -20,7 +20,7 @@ module.exports = (api, ANSWERS) => {
       "storybook-addon-vue-info": "^1.2.1"
 	  }
 	});
-	api.render('../custom-deps/storybook', {
+	api.render('../../custom-deps/storybook', {
 	  elementUI: ANSWERS['element-ui']
 	});
 };

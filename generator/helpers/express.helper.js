@@ -1,5 +1,5 @@
 const fs = require('fs');
-const findBracketsRange = require('./brackets.util');
+const findBracketsRange = require('../brackets.util');
 
 module.exports = (api) => {
 	api.extendPackage({
@@ -18,7 +18,7 @@ module.exports = (api) => {
 	    'shell-executor': '^6.0.1'
 	  }
 	})
-	api.render('../custom-deps/express');
+	api.render('../../custom-deps/express');
 	api.onCreateComplete(() => {
 	  const vueConfig = api.resolve('./vue.config.js');
 	  

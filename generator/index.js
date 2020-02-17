@@ -1,14 +1,15 @@
 const fs = require('fs');
 const path = require('path');
 const eslintConfig = require('./eslint.config');
-const vueI18nHelper = require('./vueI18n.helper');
-const eleHelper = require('./ele.helper');
-const expressHelper = require('./express.helper');
-const docsHelper = require('./docs.helper');
-const configHelper = require('./config.helper');
-const routerHelper = require('./router.helper');
-const storybookHelper = require('./storybook.helper');
-const compositionHelper = require('./composition.helper');
+const vueI18nHelper = require('./helpers/vueI18n.helper');
+const eleHelper = require('./helpers/ele.helper');
+const expressHelper = require('./helpers/express.helper');
+const docsHelper = require('./helpers/docs.helper');
+const configHelper = require('./helpers/config.helper');
+const stage1Helper = require('./helpers/stage1.helper');
+const routerHelper = require('./helpers/router.helper');
+const storybookHelper = require('./helpers/storybook.helper');
+const compositionHelper = require('./helpers/composition.helper');
 
 module.exports = (api, options, rootOptions) => {
   const ANSWERS = {
@@ -75,6 +76,8 @@ module.exports = (api, options, rootOptions) => {
       chainWebpack: (config) => {}
     }
   });
+  
+  stage1Helper(api);
 
   if (ANSWERS['composition-api']) {
     compositionHelper(api);

@@ -1,5 +1,5 @@
 const fs = require('fs');
-const findBracketsRange = require('./brackets.util');
+const findBracketsRange = require('../brackets.util');
 
 module.exports = (api) => {
 	api.onCreateComplete(() => {

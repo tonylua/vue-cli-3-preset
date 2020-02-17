@@ -3,6 +3,7 @@
  * @param {Object} context
  * @param {Object} instanceName
  */
+// eslint-disable-next-line import/prefer-default-export
 export function findInstanceFromComposition(context, instanceName) {
   const { $children } = context.parent;
   const f = $children.filter(child => child.constructor.extendOptions.name === instanceName);
