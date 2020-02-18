@@ -7,6 +7,6 @@ module.exports = (api, ANSWERS) => {
 	api.render('../../custom-deps/element', {
 	  'vuei18n': ANSWERS['vue-i18n']
 	});
-	api.injectImports('src/main.js', 
+	api.injectImports(api.entryFile, 
 	  `import './plugins/element'`);
 };

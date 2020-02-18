@@ -48,25 +48,16 @@ npm run serve --ip=xxx.xxx.xxx.xxx
 
 ### Docker 
 
-- Edit `listen` and `server_name` in `/config/nginx.conf`
-- `docker build --build-arg ENDPOINT='API_PROTOCAL://API_HOST:API_PORT' -t IMAGE_NAME .`
-- `docker run -p 48081:8081 -d IMAGE_NAME`
+- *STEP1(optional)* : Edit `listen` property in `/config/nginx.conf` if you want to change the `8081` port
+- *STEP2* : Create a JSON format file containing the API endpoint, the content looks like this: `{"ENDPOINT": "http://api.app.com:5888"}`
+- *STEP3* : `docker build -t <IMAGE_NAME> .`
+- *STEP4* : `docker run -p 48081:8081 -v <STEP2_JSON_PATH>:/usr/share/nginx/html/endpoint.json:ro -d <IMAGE_NAME>`
 
 #### Local test with docker container & mock
 
-```
-# /etc/hosts
-127.0.0.1 api.appcloud.com
-
-# start mock server
-node api/mock.server.js --mockorigin=http://localhost:48081 --mockport=3456
-
-# build image with args
-docker build --build-arg ENDPOINT='http://api.appcloud.com:3456' -t jds-webconsole-local .
-
-# run container
-docker run -p 48081:8081 -d jds-webconsole-local
-
-# visit in browser
-http://localhost:48081/
-```
+- *STEP1* : Config `/etc/hosts`, add `127.0.0.1 api.app.com`
+- *STEP2* : Create a JSON format file containing the API endpoint, the content looks like this: `{"ENDPOINT": "http://api.app.com:5888"}`
+- *STEP3* : `node api/mock.server.js --mockorigin=http://localhost:48081 --mockport=5678`
+- *STEP4* : `docker build -t <IMAGE_NAME> .`
+- *STEP5* : `docker run -p 48081:8081 -v <STEP2_JSON_PATH>:/usr/share/nginx/html/endpoint.json:ro -d <IMAGE_NAME>`
+- *STEP6* : visit `http://localhost:48081/` in browser

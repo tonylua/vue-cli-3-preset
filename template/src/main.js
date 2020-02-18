@@ -1,12 +1,10 @@
+import 'whatwg-fetch'
+import 'normalize.css'
 import Vue from 'vue'
 import App from './App.vue'
-import router from './router'
-import store from './store'
 import mixins from './mixins'
 import filters from './filters'
 import directives from './directives'
-import 'whatwg-fetch'
-import 'normalize.css'
 
 Object.keys(mixins).forEach(key=>{
   Vue.mixin(key, mixins[key]);
@@ -24,11 +22,26 @@ Vue.config.productionTip = false;
 Vue.use(VueCompositionApi);
 <% } %>
 
-new Vue({
-  <% if (opt_i18n) { %>
-  i18n,
-  <% } %>
-  router,
-  store,
-  render: h => h(App),
-}).$mount('#app');
+const init = async () => {
+  const store = await import('./store');
+  const router = await import('./router');
+  return new Vue({
+    <% if (opt_i18n) { %>
+    i18n,
+    <% } %>
+    router: router.default,
+    store: store.default,
+    render: h => h(App),
+  }).$mount('#app');
+}
+
+// eslint-disable-next-line no-undef
+if (RUNTIME_ENV === 'prod') {
+  fetch('/endpoint.json').then(res => res.json()).then(cfg => {
+    window.API_ENDPOINT = cfg.ENDPOINT;
+    // lazy loading to ensure API_ENDPOINT
+    init();
+  });
+} else {
+  init();
+}

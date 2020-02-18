@@ -26,8 +26,7 @@ export const updateBodyClass = (path) => {
  * @see src/utils/fetchWrapper/index.js
  */
 export const abortPeddingFetches = () => {
-  const fetchIds = window.abortFetchIds;
-  fetchIds.forEach((fid, index) => {
+  (window.abortFetchIds || []).forEach((fid, index) => {
     QuickFetch.abort(fid);
     window.abortFetchIds.splice(index, 1);
   });

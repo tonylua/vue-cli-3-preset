@@ -6,6 +6,6 @@ module.exports = (api) => {
 	  }
 	});
 	api.render('../../custom-deps/vue-i18n');
-	api.injectImports('src/main.js', 
+	api.injectImports(api.entryFile, 
 	  `import i18n from './plugins/i18n'`);
 };

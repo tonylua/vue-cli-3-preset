@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const eslintConfig = require('./eslint.config');
+const mainHelper = require('./helpers/main.helper');
 const vueI18nHelper = require('./helpers/vueI18n.helper');
 const eleHelper = require('./helpers/ele.helper');
 const expressHelper = require('./helpers/express.helper');
@@ -26,13 +27,14 @@ module.exports = (api, options, rootOptions) => {
       .forEach(path => delete files[path]) // delete unexpect dirs
   });
 
-  api.render('../template', {
+  const tmplParams = {
     'projectName': rootOptions.projectName,
     'opt_compositionapi': ANSWERS['composition-api'],
     'opt_i18n': ANSWERS['vue-i18n'],
     'opt_express': ANSWERS['mock-express'],
     'opt_elementui': ANSWERS['element-ui']
-  });
+  };
+  api.render('../template', tmplParams);
 
   api.extendPackage({
     eslintConfig,
@@ -98,6 +100,7 @@ module.exports = (api, options, rootOptions) => {
   api.onCreateComplete(() => {
     routerHelper(api);
     configHelper(api);
+    mainHelper(api);
     docsHelper(api,
       rootOptions.projectName,
       !!ANSWERS['mock-express'],

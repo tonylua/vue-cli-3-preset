@@ -5,6 +5,6 @@ module.exports = (api) => {
 	  }
 	});
   api.render('../../custom-deps/composition-api');
-	api.injectImports('src/main.js',
+	api.injectImports(api.entryFile,
 	  `import VueCompositionApi from '@vue/composition-api'`);
 };
