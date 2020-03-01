@@ -12,11 +12,11 @@ module.exports = (api, ANSWERS) => {
       "vue-loader": "^15.7.0",
       "vue-style-loader": "^4.1.2",
       "vue-template-compiler": "^2.6.10",
-	    "@storybook/addon-backgrounds": "^5.1.9",
-	    "@storybook/addon-storysource": "^5.1.9",
-	    "@storybook/addon-viewport": "^5.1.9",
-	    "@storybook/addons": "^5.1.9",
-	    "@storybook/vue": "^5.1.9",
+	    "@storybook/addon-backgrounds": "^5.3.14",
+	    "@storybook/addon-storysource": "^5.3.14",
+	    "@storybook/addon-viewport": "^5.3.14",
+	    "@storybook/addons": "^5.3.14",
+	    "@storybook/vue": "^5.3.14",
       "storybook-addon-vue-info": "^1.2.1"
 	  }
 	});

@@ -13,6 +13,12 @@ setDefaults({
 addDecorator(withInfo);
 const req = require.context('../src', true, /\.stories\.js$/);
 function loadStories() {
-  req.keys().forEach(filename => req(filename));
+  req.keys().forEach(filename => {
+    try {
+      req(filename)
+    } catch (ex) {
+      console.log('storybook-req', ex)
+    }
+  });
 }
 configure(loadStories, module);
