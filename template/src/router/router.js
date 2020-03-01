@@ -14,7 +14,7 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: () => import(/* webpackChunkName: "main" */ '@/views/Home.vue'),
+      component: () => import(/* webpackChunkName: "majorbundle" */ '@/views/Home.vue'),
       meta: {
         title: 'Home'
       }
@@ -22,7 +22,7 @@ export default new Router({
     {
       path: '/about',
       name: 'about',
-      component: () => import(/* webpackChunkName: "main" */ '@/views/About.vue'),
+      component: () => import(/* webpackChunkName: "majorbundle" */ '@/views/About.vue'),
       meta: {
         title: 'About'
       }
