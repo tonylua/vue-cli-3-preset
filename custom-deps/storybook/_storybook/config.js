@@ -4,7 +4,16 @@ import { withInfo, setDefaults } from 'storybook-addon-vue-info';
 import 'normalize.css';
 <% if (elementUI) { %>
 import Element from 'element-ui';
+<% } %>
+<% if (compositionAPI) { %>
+import VueCompositionApi from '@vue/composition-api';
+<% } %>
+
+<% if (elementUI) { %>
 Vue.use(Element);
+<% } %>
+<% if (compositionAPI) { %>
+Vue.use(VueCompositionApi);
 <% } %>
 
 setDefaults({

@@ -52,15 +52,19 @@ const Wrapper = function(option) {
       }))
       .then(
         (res) => {
-          const disposition = res.headers.get('content-disposition');
-          if (disposition && disposition.match(/attachment/)) {
-            let filename = disposition.replace(/attachment;.*filename=/, '').replace(/"/g, '');
-            filename = filename && filename !== ''
-              ? filename
-              : 'download';
-            res.blob().then(blob => saveAs(blob, filename));
+          const isJSON = /^application\/(.*?\+)?json;?/.test(res.headers.get('Content-Type'));
+          if (isJSON) return res.json();
+          
+          let filename = roption.filename;
+          if (!filename) {
+            const disposition = res.headers.get('content-disposition');
+            if (disposition && disposition.match(/attachment/)) {
+              filename = disposition.replace(/attachment;.*filename=/, '').replace(/"/g, '');
+            } else {
+              filename = 'noname';
+            }
           }
-          return res.json();
+          res.blob().then(blob => saveAs(blob, filename));
         }
       )
       .finally(

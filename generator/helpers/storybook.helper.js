@@ -21,6 +21,7 @@ module.exports = (api, ANSWERS) => {
 	  }
 	});
 	api.render('../../custom-deps/storybook', {
-	  elementUI: ANSWERS['element-ui']
+	  elementUI: ANSWERS['element-ui'],
+    compositionAPI: ANSWERS['composition-api']
 	});
 };
