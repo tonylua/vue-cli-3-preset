@@ -17,7 +17,7 @@ module.exports = (api, ANSWERS) => {
 	    "@storybook/addon-viewport": "^5.3.14",
 	    "@storybook/addons": "^5.3.14",
 	    "@storybook/vue": "^5.3.14",
-      "storybook-addon-vue-info": "^1.2.1"
+      "storybook-addon-vue-info": "^1.4.1"
 	  }
 	});
 	api.render('../../custom-deps/storybook', {

@@ -94,7 +94,7 @@ app.use((req, res, next) => {
   next();
 });
 
-walk(path.resolve('./'))
+walk(__dirname)
   .filter(p => /\.api\.js$/.test(p.path))
   .map(p => p.path)
   .forEach(part => require(part)(app));
