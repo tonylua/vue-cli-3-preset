@@ -102,6 +102,9 @@ walk(__dirname)
 _existRoutes = app._router.stack.filter(s => s.route).map(s => s.route.path);
 console.log(_existRoutes.sort());
 
-app.listen(argsMap.mockport || mock.port, mock.host, () => {
-  console.log(`\n\n Local server running at: http://${mock.host}:${argsMap.mockport || mock.port} \n\n`);
+const { mockport, mockhost } = argsMap;
+const p1 = mockport || mock.port;
+const h1 = mockhost || mock.host;
+app.listen(p1, h1, () => {
+  console.log(`\n\n Local server running at: http://${h1}:${p1} \n\n`);
 });

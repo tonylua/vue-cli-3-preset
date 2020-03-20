@@ -13,4 +13,4 @@ FROM nginx:1.17-alpine
 COPY config/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build-stage /app/dist /usr/share/nginx/html
 EXPOSE 8081
-CMD ["nginx", "-g", "daemon off;"]
+# CMD ["nginx", "-g", "daemon off;"]
