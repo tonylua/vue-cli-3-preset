@@ -5,8 +5,11 @@
  */
 // eslint-disable-next-line import/prefer-default-export
 export function findInstanceFromComposition(context, instanceName) {
-  const { $children } = context.parent;
-  const f = $children.filter(child => child.constructor.extendOptions.name === instanceName);
+  const f = context.parent.$children.filter(child => {
+    return (new RegExp(`-${instanceName}$`)).test(child.$vnode.tag)
+      || child.constructor.extendOptions.name === instanceName;
+  });
   if (!f.length) return null;
   return f[0];
-};
+}
+
