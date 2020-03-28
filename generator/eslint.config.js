@@ -28,7 +28,16 @@ module.exports = {
     'arrow-parens': 'off',
     'import/extensions': 'off',
     'import/order': 'off',
-    'import/no-extraneous-dependencies': 'off'
+    'import/no-extraneous-dependencies': 'off',
+    'object-curly-newline': 'warn',
+    'object-curly-spacing': 'warn',
+    'import/no-cycle': 'off',
+    'no-continue': 'off',
+    'vue/no-unused-components': 'warn',
+    'camelcase': 'off',
+    'dot-notation': 'warn',
+    'arrow-body-style': 'warn',
+    'no-unused-expressions': 'warn'
   },
   globals: {
   }
