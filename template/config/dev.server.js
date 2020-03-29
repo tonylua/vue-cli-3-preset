@@ -11,7 +11,7 @@ const proxy = config.proxy.reduce((rst, p) => {
 		target: useLocal
 			? `http://${mock.host}:${mock.port}`
 			: target,
-		changeOrigin: true
+		changeOrigin: useLocal
 	};
 	if (rewrite && rewrite.need) {
 		// 加入了prefix，区分支持 /api 和 /xapi2 等不同的前缀
