@@ -5,6 +5,7 @@ const useLocal = !!~original.indexOf('--local')
   || !!~process.argv.indexOf('--local');
 const appIp = process.env.npm_config_ip;
 const apiEndpoint = process.env.npm_config_endpoint;
+const devRewrite = process.env.npm_config_rewrite;
 
 const appConfig = {
   host: appIp || 'localhost',
@@ -42,8 +43,8 @@ module.exports = {
         target,
         prefix: prefixs[i],
         rewrite: {
-          need: useLocal,
-          local: true
+          need: useLocal || devRewrite,
+          to: devRewrite
         }
       });
     }

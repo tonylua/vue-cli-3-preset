@@ -15,8 +15,8 @@ npm run lint
 npm run test
 ### Compiles and hot-reloads for development
 npm run serve
-### Compiles and hot-reloads for development, use local IP instead of localhost
-npm run serve --ip=xxx.xxx.xxx.xxx
+### Compiles and hot-reloads for development, use local remote API instead of localhost
+npm run serve --endpoint=http://api.foo.com --rewrite=/api
 ```
 
 <!--LOCAL_EXPRESS?-->
