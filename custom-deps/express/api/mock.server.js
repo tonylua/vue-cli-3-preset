@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const request = require('request');
 const path = require('path');
 const walk = require('klaw-sync');
+const _ = require('lodash');
 const config = require('../config/config');
 
 const argRe = /^\-{1,2}([a-z]+?)=(.*)$/;
@@ -69,9 +70,12 @@ app.use((req, res, next) => {
     const rOptions = {
       url: rUrl,
       method: req.method,
-      headers: req.headers
+			headers: _.omit(req.headers, [
+				'host'
+			]),
+			jar: true
     };
-    console.log('[redirect]', req.method, target, url, req.body, req.headers['content-length']);
+    console.log('[redirect]', req.method, target, url, req.body);
 
     if (/GET|HEAD|DELETE/i.test(req.method)) {
       req.pipe(request(rOptions)).pipe(res);

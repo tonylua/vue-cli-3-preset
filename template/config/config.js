@@ -25,12 +25,12 @@ let proxyMap = [
   },
   // ...more proxies
 ];
-if (useLocal) {
-  proxyMap = proxyMap.map(p => ({
-    prefixs: p.prefixs,
-    target: `http://${mockConfig.host}:${mockConfig.port}`
-  }));
-}
+// if (useLocal) {
+//   proxyMap = proxyMap.map(p => ({
+//     prefixs: p.prefixs,
+//     target: `http://${mockConfig.host}:${mockConfig.port}`
+//   }));
+// }
 
 module.exports = {
   app: appConfig,
@@ -39,7 +39,7 @@ module.exports = {
     const { target, prefixs } = map;
     for (let i = 0; i < prefixs.length; i++) {
       result.push({
-        forMock: true,
+        // forMock: true,
         target,
         prefix: prefixs[i],
         rewrite: {
