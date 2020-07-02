@@ -2,13 +2,10 @@ import 'whatwg-fetch'
 import 'normalize.css'
 import Vue from 'vue'
 import App from './App.vue'
-import mixins from './mixins'
+// import mixins from './mixins'
 import filters from './filters'
 import directives from './directives'
 
-Object.keys(mixins).forEach(key=>{
-  Vue.mixin(key, mixins[key]);
-});
 Object.keys(filters).forEach(key=>{
   Vue.filter(key, filters[key]);
 });
