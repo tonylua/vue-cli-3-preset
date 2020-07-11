@@ -2,7 +2,6 @@ import 'whatwg-fetch'
 import 'normalize.css'
 import Vue from 'vue'
 import App from './App.vue'
-// import mixins from './mixins'
 import filters from './filters'
 import directives from './directives'
 
@@ -14,10 +13,6 @@ Object.keys(directives).forEach(key=>{
 });
 
 Vue.config.productionTip = false;
-
-<% if (opt_compositionapi) { %>
-Vue.use(VueCompositionApi);
-<% } %>
 
 const init = async () => {
   const store = await import('./store');
@@ -32,13 +27,11 @@ const init = async () => {
   }).$mount('#app');
 }
 
-// eslint-disable-next-line no-undef
-if (RUNTIME_ENV === 'prod') {
-  fetch('/endpoint.json').then(res => res.json()).then(cfg => {
-    window.API_ENDPOINT = cfg.ENDPOINT;
-    // lazy loading to ensure API_ENDPOINT
-    init();
-  });
-} else {
-  init();
-}
+// if (RUNTIME_ENV === 'prod') {
+  // fetch('/endpoint.json').then(res => res.json()).then(cfg => {
+    // window.API_ENDPOINT = cfg.ENDPOINT;
+init().then(app => {});
+  // });
+// } else {
+  // init();
+// }
