@@ -22,3 +22,4 @@ vue create --preset tonylua/vue-cli-3-preset <YOUR_PROJECT_NAME>
 - [x] Nginx Static Server & gzip
 - [x] ES6 nullish-coalescing-operator
 - [x] ES6 optional-chaining
+- [x] typescript

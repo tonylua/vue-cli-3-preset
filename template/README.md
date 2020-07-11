@@ -2,11 +2,11 @@
 
 ```
 ### Project setup
-npm install
-### Compiles and minifies for production
+npm install -registry=https://registry.npm.taobao.org
+### Compiles for non-production
 npm run build
-### Compiles and open bundle size report
-npm run build --report
+### Complies for production
+npm run build-prod
 ### Run your unit tests
 npm run test
 ### Lints and fixes files
