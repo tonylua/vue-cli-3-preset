@@ -1,42 +1,41 @@
-/* eslint-disable */
-const { getErrorTip } = require("./busi.utils");
-
 global.Headers = function(cfg) {
   this._cfg = cfg;
   this.has = key => key in this._cfg;
   this.get = key => this._cfg[key];
 };
 
+const { VALID_CODE, KEY_CODE, KEY_MSG, getErrorTip } = require("./busi.utils.ts");
 jest.mock("@/store", () => ({
   getters: {
     GLOBAL_DATA: {
-      // 各种统一提示，由 'GET /ajax-api/foo/getGlobalConfig' 返回
+      // 各种统一提示，由 'GET /api/cps/getGlobalConfig' 返回
       tips: {
-        "0": {
+        // `jest.mock()` is not allowed to reference any out-of-scope variables
+        "200": {
           // 成功时
-          "/ajax-api/order/submitTempOrder": "操作成功1",
-          "/ajax-api/foo/start": "操作成功2",
-          "/ajax-api/foo/stop": "操作成功3",
-          "/ajax-api/foo/restart": "操作成功4",
-          "/ajax-api/foo/reinstall": "操作成功5",
-          "/ajax-api/foo/modifyName": "操作成功6",
-          "/ajax-api/foo/modifyDescription": "操作成功7",
-          "/ajax-api/foo/associate": "操作成功8",
-          "PUT /ajax-api/foo/disassociate": "操作成功9",
-          "PUT /ajax-api/foo/disassociate/:param1": "操作成功19",
-          "/ajax-api/foo/disassociate": "操作成功911"
+          "/api/order/submitTempOrder": "操作成功1",
+          "/api/cps/startInstance": "操作成功2",
+          "/api/cps/stopInstance": "操作成功3",
+          "/api/cps/restartInstance": "操作成功4",
+          "/api/cps/reinstallInstance": "操作成功5",
+          "/api/cps/modifyInstanceName": "操作成功6",
+          "/api/cps/modifyInstanceDescription": "操作成功7",
+          "/api/cps/associateElasticIp": "操作成功8",
+          "PUT /api/cps/disassociateElasticIp": "操作成功9",
+          "PUT /api/cps/disassociateElasticIp/:param1": "操作成功19",
+          "/api/cps/disassociateElasticIp": "操作成功911"
         },
         "40201": {
           default: "HELLO WORLD",
-          "/ajax-api/ticket/importToOssByName": "附件上传失败1",
-          "/ajax-api/ticket/submitTicket": "提交失败298",
-          "DELETE /ajax-api/ticket/submitTicket": "提交失败2",
+          "/api/ticket/importToOssByName": "附件上传失败1",
+          "/api/ticket/submitTicket": "提交工单失败298",
+          "DELETE /api/ticket/submitTicket": "提交工单失败2",
           "DELETE /ports/:portId/xxx/:param2": "删除失败"
         },
         "40879": {
-          "/ajax-api/ticket/cancelTicket": "操作失败1",
-          "/ajax-api/ticket/confirmPlan": "操作失败2",
-          "/ajax-api/ticket/confirmDeliver": "操作失败3"
+          "/api/ticket/cancelTicket": "工单操作失败1",
+          "/api/ticket/confirmPlan": "工单操作失败2",
+          "/api/ticket/confirmDeliver": "工单操作失败3"
         }
       }
     }
@@ -47,10 +46,10 @@ describe("测试全局提示", () => {
   it("简单 URL 匹配", () => {
     expect(
       getErrorTip(
-        "GET /ajax-api/foo/reinstall",
+        "GET /api/cps/reinstallInstance",
         {
-          code: 0,
-          message: "xxx"
+          [KEY_CODE]: VALID_CODE,
+          [KEY_MSG]: "xxx"
         },
         null
       )
@@ -58,23 +57,23 @@ describe("测试全局提示", () => {
 
     expect(
       getErrorTip(
-        "DELETE /ajax-api/ticket/confirmPlan",
+        "DELETE /api/ticket/confirmPlan",
         {
-          code: 40879,
-          message: "yyy"
+          [KEY_CODE]: 40879,
+          [KEY_MSG]: "yyy"
         },
         null
       )
-    ).toEqual("操作失败2");
+    ).toEqual("工单操作失败2");
   });
 
   it("默认 URL 匹配", () => {
     expect(
       getErrorTip(
-        "GET /ajax-api/foo/undefined1",
+        "GET /api/cps/undefined1",
         {
-          code: 40201,
-          message: "xxx"
+          [KEY_CODE]: 40201,
+          [KEY_MSG]: "xxx"
         },
         null
       )
@@ -82,10 +81,10 @@ describe("测试全局提示", () => {
 
     expect(
       getErrorTip(
-        "GET /ajax-api/foo/undefined2",
+        "GET /api/cps/undefined2",
         {
-          code: 0,
-          message: "xxx"
+          [KEY_CODE]: VALID_CODE,
+          [KEY_MSG]: "xxx"
         },
         null
       )
@@ -93,10 +92,10 @@ describe("测试全局提示", () => {
 
     expect(
       getErrorTip(
-        "GET /ajax-api/foo/undefined3",
+        "GET /api/cps/undefined3",
         {
-          code: 40879,
-          message: "xxx123"
+          [KEY_CODE]: 40879,
+          [KEY_MSG]: "xxx123"
         },
         null
       )
@@ -106,66 +105,66 @@ describe("测试全局提示", () => {
   it("带 method 的 URL 匹配", () => {
     expect(
       getErrorTip(
-        "PUT /ajax-api/foo/disassociate",
+        "PUT /api/cps/disassociateElasticIp",
         {
-          code: 0,
-          message: "xxx"
+          [KEY_CODE]: VALID_CODE,
+          [KEY_MSG]: "xxx"
         },
         null
       )
     ).toEqual("操作成功9");
     expect(
       getErrorTip(
-        "DELETE /ajax-api/ticket/submitTicket/",
+        "DELETE /api/ticket/submitTicket/",
         {
-          code: 40201,
-          message: "xxx"
+          [KEY_CODE]: 40201,
+          [KEY_MSG]: "xxx"
         },
         null
       )
-    ).toEqual("提交失败2");
+    ).toEqual("提交工单失败2");
   });
 
   it("完整的 URL 匹配", () => {
     expect(
       getErrorTip(
-        "PUT https://foo.com/bar/ajax-api/foo/modifyName",
+        "PUT https://foo.com/bar/api/cps/modifyInstanceName",
         {
-          code: 0,
-          message: "xxx"
+          [KEY_CODE]: VALID_CODE,
+          [KEY_MSG]: "xxx"
         },
         null
       )
     ).toEqual("操作成功6");
     expect(
       getErrorTip(
-        "DELETE ws://foo.com/ajax-api/ticket/confirmPlan/#abc=123&cba=321?foo=bar&iii=777",
+        "DELETE ws://foo.com/api/ticket/confirmPlan/#abc=123&cba=321?foo=bar&iii=777",
         {
-          code: 40879,
-          message: "yyy"
+          [KEY_CODE]: 40879,
+          [KEY_MSG]: "yyy"
         },
         null
       )
-    ).toEqual("操作失败2");
+    ).toEqual("工单操作失败2");
     expect(
       getErrorTip(
-        "DELETE http://local.foo.com:8080/ajax-api/ticket/submitTicket?vpcId=2e4a4153d903e443d151",
+        "DELETE http://local.console.jdcloud.com:8080/apis/api/ticket/submitTicket?vpcId=2e4a4153-9636-4355-8386-d903e443d151",
         {
-          code: 40201,
-          message: "xxx"
+          [KEY_CODE]: 40201,
+          [KEY_MSG]: "xxx"
         },
         null
       )
-    ).toEqual("提交失败2");
+    ).toEqual("提交工单失败2");
   });
 
   it("带参数的 route 匹配", () => {
     expect(
       getErrorTip(
-        "PUT /ajax-api/foo/disassociate/023ffsfsf02342f",
+        "PUT /api/cps/disassociateElasticIp/023ffsfsf02342f",
         {
-          code: 0,
-          message: "xxx"
+          [KEY_CODE]: VALID_CODE,
+          [KEY_MSG]: "xxx"
         },
         null
       )
@@ -174,8 +173,8 @@ describe("测试全局提示", () => {
       getErrorTip(
         "DELETE https://foo.com/bar/ports/9923fsffff/xxx/8823f23f",
         {
-          code: 40201,
-          message: "xxx"
+          [KEY_CODE]: 40201,
+          [KEY_MSG]: "xxx"
         },
         null
       )
@@ -185,10 +184,10 @@ describe("测试全局提示", () => {
   it("无 URL 匹配", () => {
     expect(
       getErrorTip(
-        "PUT /ajax-api/foo/abc",
+        "PUT /api/cps/abc",
         {
-          code: 0,
-          message: "xxxyyy"
+          [KEY_CODE]: VALID_CODE,
+          [KEY_MSG]: "xxxyyy"
         },
         null
       )
@@ -196,10 +195,10 @@ describe("测试全局提示", () => {
 
     expect(
       getErrorTip(
-        "PUT /ajax-api/foo/abc",
+        "PUT /api/cps/abc",
         {
-          code: 43456,
-          message: "xxxyyy"
+          [KEY_CODE]: 43456,
+          [KEY_MSG]: "xxxyyy"
         },
         null
       )
@@ -209,10 +208,10 @@ describe("测试全局提示", () => {
   it("header 中注明了不提示", () => {
     expect(
       getErrorTip(
-        "PUT /ajax-api/foo/reinstall",
+        "PUT /api/cps/reinstallInstance",
         {
-          code: 0,
-          message: "xxx"
+          [KEY_CODE]: VALID_CODE,
+          [KEY_MSG]: "xxx"
         },
         new Headers({
           "no-global-config-warn": 1
@@ -221,10 +220,10 @@ describe("测试全局提示", () => {
     ).toBeFalsy();
     expect(
       getErrorTip(
-        "PUT /ajax-api/foo/reinstall",
+        "PUT /api/cps/reinstallInstance",
         {
-          code: 0,
-          message: "xxx"
+          [KEY_CODE]: VALID_CODE,
+          [KEY_MSG]: "xxx"
         },
         new Headers({
           "no-global-config-warn": "success" // 只在成功时不提示
@@ -233,10 +232,10 @@ describe("测试全局提示", () => {
     ).toBeFalsy();
     expect(
       getErrorTip(
-        "PUT /ajax-api/foo/reinstall",
+        "PUT /api/cps/reinstallInstance",
         {
-          code: 41345,
-          message: "x321"
+          [KEY_CODE]: 41345,
+          [KEY_MSG]: "x321"
         },
         new Headers({
           "no-global-config-warn": "success" // 只在成功时不提示
@@ -245,10 +244,10 @@ describe("测试全局提示", () => {
     ).toEqual("x321");
     expect(
       getErrorTip(
-        "PUT /ajax-api/foo/foobar",
+        "PUT /api/cps/foobar",
         {
-          code: 0,
-          message: "x987"
+          [KEY_CODE]: VALID_CODE,
+          [KEY_MSG]: "x987"
         },
         new Headers({
           "no-global-config-warn": "error" // 只在错误时不提示
@@ -257,10 +256,10 @@ describe("测试全局提示", () => {
     ).toBeFalsy(); // 成功时，除非特别在 globalData 中指定，否则也不会提示 message
     expect(
       getErrorTip(
-        "PUT /ajax-api/foo/foobar",
+        "PUT /api/cps/foobar",
         {
-          code: 0,
-          message: "xxx"
+          [KEY_CODE]: VALID_CODE,
+          [KEY_MSG]: "xxx"
         },
         new Headers({
           "no-global-config-warn": "error" // 只在错误时不提示

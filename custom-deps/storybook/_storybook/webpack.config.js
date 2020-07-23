@@ -19,8 +19,25 @@ module.exports = ({ config, mode }) => {
   };
   config.module.rules.push({
     test: /\.scss$/,
-    include: pathResolve("src"),
-    use: ["style-loader", "css-loader", "sass-loader"],
+    oneOf: [
+      {
+        include: pathResolve("src"),
+        use: [
+          "style-loader",
+          {
+            loader: "css-loader",
+            options: {
+              modules: true,
+            },
+          },
+          "sass-loader",
+        ],
+      },
+      {
+        include: pathResolve("src"),
+        use: ["style-loader", "css-loader", "sass-loader"],
+      },
+    ],
   });
   config.module.rules.push({
     test: /\.vue$/,

@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import QuickFetch from 'quickfetch';
-// import router from '@/router/router';
+import router from '@/router/router';
 import CustomError from '../CustomError';
 
 const ERROR_HTTP = 'ERROR_HTTP';
@@ -24,7 +24,7 @@ const badStatusMap = (url) => ({
   505: 'HTTP版本不受支持'
 });
 
-export default function useBadHTTPMiddleware(r, onlyCheck = false, fetchId = void(0)) {
+export default function useBadHTTPMiddleware(r, onlyCheck = false, fetchId = void (0)) {
   // bad HTTP request
   const badHTTPMiddleware = r.use(QuickFetch.RESPONSE, async (res, next) => {
     const { status } = res;
@@ -32,29 +32,32 @@ export default function useBadHTTPMiddleware(r, onlyCheck = false, fetchId = voi
       console.log('%c[fetchWrapper] bad HTTP request: status is %s', 'color: red', status);
 
       if (!onlyCheck) {
-        // const { fullPath } = router.currentRoute;
-      
+        const { fullPath } = router.currentRoute;
+
         switch (status) {
-        //   case 401:
-        //     router.push({
-        //       path: '/login',
-        //       query: {
-        //         redirect: fullPath,
-        //         relogin: 'yes'
-        //       }
-        //     });
-        //     return;
-        //   case 403:
-        //   case 404:
-        //   case 500:
-        //     router.push({
-        //       path: `/error/${status}`,
-        //       query: {
-        //         from: fullPath,
-        //         badURL: res.url
-        //       }
-        //     });
-        //     return;
+          case 401:
+            router.push({
+              path: '/login',
+              query: {
+                redirect: fullPath,
+                relogin: 'yes'
+              }
+            });
+            // next(res);
+            return;
+          case 403:
+          case 404:
+          case 500:
+            // console.log(res, 999);
+            router.push({
+              path: `/error/${status}`,
+              query: {
+                from: fullPath,
+                badURL: res.url
+              }
+            });
+            // next(res);
+            return;
           default:
             break;
         }
@@ -78,8 +81,7 @@ export default function useBadHTTPMiddleware(r, onlyCheck = false, fetchId = voi
         const message = badStatusMap(url)[status] || statusText;
         if (message) {
           r._errTimeout = setTimeout(() => {
-            // Vue.prototype.$message.error(message);
-            alert(message);
+            Vue.prototype.$message.error(message);
           }, 500);
         }
       }
