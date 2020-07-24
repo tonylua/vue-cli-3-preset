@@ -6,6 +6,7 @@ import useHeadersMiddleware from "./middlewares/headers";
 import useTimeoutMiddleware from "./middlewares/timeout";
 import useBadHTTPMiddleware from "./middlewares/badHTTP";
 import useWrongBusiMiddleware from "./middlewares/wrongBusiness.ts";
+import { API_PREFIX } from "./constants";
 
 /**
  * 用于配置请求基本信息的常量
@@ -24,7 +25,7 @@ const Wrapper = function (option) {
       {
         endpoint: window.API_ENDPOINT, // see main.js
         timeout: TIMEOUT,
-        baseURL: "/ajax-api",
+        baseURL: API_PREFIX,
         ignoreBodyMethods: ["get", "head", "delete"],
       },
       option

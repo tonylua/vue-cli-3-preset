@@ -1,27 +1,29 @@
+const { API_PREFIX } = require("../src/utils/fetchWrapper/constants");
+
 const original = process.env.npm_config_argv
   ? JSON.parse(process.env.npm_config_argv).original
-  : '';
-const useLocal = !!~original.indexOf('--local')
-  || !!~process.argv.indexOf('--local');
+  : "";
+const useLocal =
+  !!~original.indexOf("--local") || !!~process.argv.indexOf("--local");
 const appIp = process.env.npm_config_ip;
 const apiEndpoint = process.env.npm_config_endpoint;
 const devRewrite = process.env.npm_config_rewrite;
 
 const appConfig = {
-  host: appIp || 'localhost',
+  host: appIp || "localhost",
   port: 8080,
 };
 
 const mockConfig = {
-  host: appIp || 'localhost',
+  host: appIp || "localhost",
   port: 8090,
 };
 
 let proxyMap = [
   {
     // need manual sync in `/src/utils/fetchWrapper/middlewares/headers.js`
-    prefixs: ['/ajax-api'],
-    target: apiEndpoint || 'https://www.mocky.io/v2/5185415ba171ea3a00704eed'
+    prefixs: [API_PREFIX],
+    target: apiEndpoint || "https://www.mocky.io/v2/5185415ba171ea3a00704eed",
   },
   // ...more proxies
 ];
@@ -44,13 +46,13 @@ module.exports = {
         prefix: prefixs[i],
         rewrite: {
           need: useLocal || devRewrite,
-          to: devRewrite
-        }
+          to: devRewrite,
+        },
       });
     }
     return result;
   }, []),
   useLocal,
   appIp,
-  proxyMap
+  proxyMap,
 };
