@@ -1,12 +1,12 @@
 # stage 0
-FROM node:10-alpine as build-stage
+FROM node:12-alpine as build-stage
 WORKDIR /app
 COPY package*.json ./
 ENV SASS_BINARY_SITE https://npm.taobao.org/mirrors/node-sass/
-RUN npm install --registry=https://registry.npm.taobao.org
+ARG NPMREGISTRY='https://registry.npm.taobao.org'
+RUN npm install --registry=$NPMREGISTRY
 COPY . .
-ARG ENDPOINT='http://api.com:30590'
-RUN npm run build-prod --silent --endpoint=$ENDPOINT
+RUN npm run build-prod --silent
 
 # stage 1 (nginx)
 FROM nginx:1.17-alpine

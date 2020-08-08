@@ -23,7 +23,6 @@ const Wrapper = function (option) {
   const r = new QuickFetch(
     mergeWith(
       {
-        endpoint: window.API_ENDPOINT, // see main.js
         timeout: TIMEOUT,
         baseURL: API_PREFIX,
         ignoreBodyMethods: ["get", "head", "delete"],

@@ -1,10 +1,15 @@
-global.Headers = function(cfg) {
+global.Headers = function (cfg) {
   this._cfg = cfg;
-  this.has = key => key in this._cfg;
-  this.get = key => this._cfg[key];
+  this.has = (key) => key in this._cfg;
+  this.get = (key) => this._cfg[key];
 };
 
-const { VALID_CODE, KEY_CODE, KEY_MSG, getErrorTip } = require("./busi.utils.ts");
+const {
+  VALID_CODE,
+  KEY_CODE,
+  KEY_MSG,
+  getErrorTip,
+} = require("./busi.utils.ts");
 jest.mock("@/store", () => ({
   getters: {
     GLOBAL_DATA: {
@@ -23,23 +28,23 @@ jest.mock("@/store", () => ({
           "/api/cps/associateElasticIp": "操作成功8",
           "PUT /api/cps/disassociateElasticIp": "操作成功9",
           "PUT /api/cps/disassociateElasticIp/:param1": "操作成功19",
-          "/api/cps/disassociateElasticIp": "操作成功911"
+          "/api/cps/disassociateElasticIp": "操作成功911",
         },
         "40201": {
           default: "HELLO WORLD",
           "/api/ticket/importToOssByName": "附件上传失败1",
           "/api/ticket/submitTicket": "提交工单失败298",
           "DELETE /api/ticket/submitTicket": "提交工单失败2",
-          "DELETE /ports/:portId/xxx/:param2": "删除失败"
+          "DELETE /ports/:portId/xxx/:param2": "删除失败",
         },
         "40879": {
           "/api/ticket/cancelTicket": "工单操作失败1",
           "/api/ticket/confirmPlan": "工单操作失败2",
-          "/api/ticket/confirmDeliver": "工单操作失败3"
-        }
-      }
-    }
-  }
+          "/api/ticket/confirmDeliver": "工单操作失败3",
+        },
+      },
+    },
+  },
 }));
 
 describe("测试全局提示", () => {
@@ -49,7 +54,7 @@ describe("测试全局提示", () => {
         "GET /api/cps/reinstallInstance",
         {
           [KEY_CODE]: VALID_CODE,
-          [KEY_MSG]: "xxx"
+          [KEY_MSG]: "xxx",
         },
         null
       )
@@ -60,7 +65,7 @@ describe("测试全局提示", () => {
         "DELETE /api/ticket/confirmPlan",
         {
           [KEY_CODE]: 40879,
-          [KEY_MSG]: "yyy"
+          [KEY_MSG]: "yyy",
         },
         null
       )
@@ -73,7 +78,7 @@ describe("测试全局提示", () => {
         "GET /api/cps/undefined1",
         {
           [KEY_CODE]: 40201,
-          [KEY_MSG]: "xxx"
+          [KEY_MSG]: "xxx",
         },
         null
       )
@@ -84,7 +89,7 @@ describe("测试全局提示", () => {
         "GET /api/cps/undefined2",
         {
           [KEY_CODE]: VALID_CODE,
-          [KEY_MSG]: "xxx"
+          [KEY_MSG]: "xxx",
         },
         null
       )
@@ -95,7 +100,7 @@ describe("测试全局提示", () => {
         "GET /api/cps/undefined3",
         {
           [KEY_CODE]: 40879,
-          [KEY_MSG]: "xxx123"
+          [KEY_MSG]: "xxx123",
         },
         null
       )
@@ -108,7 +113,7 @@ describe("测试全局提示", () => {
         "PUT /api/cps/disassociateElasticIp",
         {
           [KEY_CODE]: VALID_CODE,
-          [KEY_MSG]: "xxx"
+          [KEY_MSG]: "xxx",
         },
         null
       )
@@ -118,7 +123,7 @@ describe("测试全局提示", () => {
         "DELETE /api/ticket/submitTicket/",
         {
           [KEY_CODE]: 40201,
-          [KEY_MSG]: "xxx"
+          [KEY_MSG]: "xxx",
         },
         null
       )
@@ -131,7 +136,7 @@ describe("测试全局提示", () => {
         "PUT https://foo.com/bar/api/cps/modifyInstanceName",
         {
           [KEY_CODE]: VALID_CODE,
-          [KEY_MSG]: "xxx"
+          [KEY_MSG]: "xxx",
         },
         null
       )
@@ -141,7 +146,7 @@ describe("测试全局提示", () => {
         "DELETE ws://foo.com/api/ticket/confirmPlan/#abc=123&cba=321?foo=bar&iii=777",
         {
           [KEY_CODE]: 40879,
-          [KEY_MSG]: "yyy"
+          [KEY_MSG]: "yyy",
         },
         null
       )
@@ -151,7 +156,7 @@ describe("测试全局提示", () => {
         "DELETE http://local.console.jdcloud.com:8080/apis/api/ticket/submitTicket?vpcId=2e4a4153-9636-4355-8386-d903e443d151",
         {
           [KEY_CODE]: 40201,
-          [KEY_MSG]: "xxx"
+          [KEY_MSG]: "xxx",
         },
         null
       )
@@ -164,7 +169,7 @@ describe("测试全局提示", () => {
         "PUT /api/cps/disassociateElasticIp/023ffsfsf02342f",
         {
           [KEY_CODE]: VALID_CODE,
-          [KEY_MSG]: "xxx"
+          [KEY_MSG]: "xxx",
         },
         null
       )
@@ -174,7 +179,7 @@ describe("测试全局提示", () => {
         "DELETE https://foo.com/bar/ports/9923fsffff/xxx/8823f23f",
         {
           [KEY_CODE]: 40201,
-          [KEY_MSG]: "xxx"
+          [KEY_MSG]: "xxx",
         },
         null
       )
@@ -187,7 +192,7 @@ describe("测试全局提示", () => {
         "PUT /api/cps/abc",
         {
           [KEY_CODE]: VALID_CODE,
-          [KEY_MSG]: "xxxyyy"
+          [KEY_MSG]: "xxxyyy",
         },
         null
       )
@@ -198,11 +203,38 @@ describe("测试全局提示", () => {
         "PUT /api/cps/abc",
         {
           [KEY_CODE]: 43456,
-          [KEY_MSG]: "xxxyyy"
+          [KEY_MSG]: "xxxyyy",
         },
         null
       )
     ).toEqual("xxxyyy");
+  });
+
+  it("从 header 中注明直接提示", () => {
+    expect(
+      getErrorTip(
+        "GET /api/order/submitTempOrder",
+        {
+          [KEY_CODE]: VALID_CODE,
+          [KEY_MSG]: "xxx",
+        },
+        new Headers({
+          "no-global-config-warn": "store",
+        })
+      )
+    ).toEqual("xxx");
+    expect(
+      getErrorTip(
+        "DELETE /api/ticket/submitTicket",
+        {
+          [KEY_CODE]: 40879,
+          [KEY_MSG]: "yyy",
+        },
+        new Headers({
+          "no-global-config-warn": "store",
+        })
+      )
+    ).toEqual("yyy");
   });
 
   it("header 中注明了不提示", () => {
@@ -211,10 +243,10 @@ describe("测试全局提示", () => {
         "PUT /api/cps/reinstallInstance",
         {
           [KEY_CODE]: VALID_CODE,
-          [KEY_MSG]: "xxx"
+          [KEY_MSG]: "xxx",
         },
         new Headers({
-          "no-global-config-warn": 1
+          "no-global-config-warn": 1,
         })
       )
     ).toBeFalsy();
@@ -223,10 +255,10 @@ describe("测试全局提示", () => {
         "PUT /api/cps/reinstallInstance",
         {
           [KEY_CODE]: VALID_CODE,
-          [KEY_MSG]: "xxx"
+          [KEY_MSG]: "xxx",
         },
         new Headers({
-          "no-global-config-warn": "success" // 只在成功时不提示
+          "no-global-config-warn": "success", // 只在成功时不提示
         })
       )
     ).toBeFalsy();
@@ -235,10 +267,10 @@ describe("测试全局提示", () => {
         "PUT /api/cps/reinstallInstance",
         {
           [KEY_CODE]: 41345,
-          [KEY_MSG]: "x321"
+          [KEY_MSG]: "x321",
         },
         new Headers({
-          "no-global-config-warn": "success" // 只在成功时不提示
+          "no-global-config-warn": "success", // 只在成功时不提示
         })
       )
     ).toEqual("x321");
@@ -247,10 +279,10 @@ describe("测试全局提示", () => {
         "PUT /api/cps/foobar",
         {
           [KEY_CODE]: VALID_CODE,
-          [KEY_MSG]: "x987"
+          [KEY_MSG]: "x987",
         },
         new Headers({
-          "no-global-config-warn": "error" // 只在错误时不提示
+          "no-global-config-warn": "error", // 只在错误时不提示
         })
       )
     ).toBeFalsy(); // 成功时，除非特别在 globalData 中指定，否则也不会提示 message
@@ -259,10 +291,10 @@ describe("测试全局提示", () => {
         "PUT /api/cps/foobar",
         {
           [KEY_CODE]: VALID_CODE,
-          [KEY_MSG]: "xxx"
+          [KEY_MSG]: "xxx",
         },
         new Headers({
-          "no-global-config-warn": "error" // 只在错误时不提示
+          "no-global-config-warn": "error", // 只在错误时不提示
         })
       )
     ).toBeFalsy();

@@ -92,6 +92,8 @@ export const getErrorTip = (
   if (isValid && noWarnScope === "success") return null;
   if (!isValid && noWarnScope === "error") return null;
 
+  if (noWarnScope === "store") return json[KEY_MSG];
+
   let _msg = null;
   // 根据 getGlobalConfig 接口获得的返回值
   // 表示与 code 和请求 url 相关的 tips 提示

@@ -27,11 +27,4 @@ const init = async () => {
   }).$mount('#app');
 }
 
-// if (RUNTIME_ENV === 'prod') {
-  // fetch('/endpoint.json').then(res => res.json()).then(cfg => {
-    // window.API_ENDPOINT = cfg.ENDPOINT;
 init().then(app => {});
-  // });
-// } else {
-  // init();
-// }
