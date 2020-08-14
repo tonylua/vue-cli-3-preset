@@ -15,10 +15,13 @@ Object.keys(directives).forEach(key=>{
 Vue.config.productionTip = false;
 
 const init = async () => {
+  // @ts-ignore
   const store = await import('./store');
+  // @ts-ignore
   const router = await import('./router');
   return new Vue({
     <% if (opt_i18n) { %>
+    // @ts-ignore
     i18n,
     <% } %>
     router: router.default,

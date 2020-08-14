@@ -19,5 +19,5 @@ export const testBusiness = () => fetchWrapper.get("/sample/wrong", null);
 export const getInfo = () =>
   fetchWrapper.get("/sample/info", null, { ...msgWarn });
 
-export const downFile = (filename) =>
+export const downFile = (filename: string) =>
   fetchWrapper.download("GET", "/sample/down", { filename });

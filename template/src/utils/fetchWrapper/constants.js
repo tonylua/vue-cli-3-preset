@@ -1,3 +1,3 @@
 module.exports = {
-  API_PREFIX: '/api/v1'
+  API_PREFIX: "/ajax-api",
 };

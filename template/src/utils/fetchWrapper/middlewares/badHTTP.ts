@@ -1,6 +1,7 @@
 import Vue from "vue";
 import QuickFetch from "quickfetch";
 import CustomError from "quickfetch/src/CustomError";
+// @ts-ignore
 import router from "@/router/router";
 
 const ERROR_HTTP = "ERROR_HTTP";
