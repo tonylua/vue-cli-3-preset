@@ -21,6 +21,6 @@ module.exports = (api) => {
 	  
 	  fs.writeFileSync(EntryFile, lines.join(EOL), { encoding: 'utf-8' });
 	  */
-    fs.unlinkSync(api.resovle("src/main.js"));
+    fs.unlinkSync(api.resolve("src/main.js"));
   });
 };
