@@ -57,6 +57,8 @@ module.exports = (api, options, rootOptions) => {
       "normalize.css": "^8.0.1",
       "@types/lodash": "^4.14.157",
       "@types/jest": "^26.0.4",
+      "@types/lodash": "^4.14.159",
+      "@types/file-saver": "^2.0.1",
       "@typescript-eslint/eslint-plugin": "^2.33.0",
       "@typescript-eslint/parser": "^2.33.0",
       "@vue/cli-plugin-typescript": "^4.4.6",

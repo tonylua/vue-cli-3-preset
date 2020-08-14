@@ -1,11 +1,11 @@
 import { mergeWith, findIndex } from "lodash";
-import saveAs from "file-saver";
-// @ts-ignore
+import { saveAs } from "file-saver";
 import QuickFetch from "quickfetch";
 import useHeadersMiddleware from "./middlewares/headers";
 import useTimeoutMiddleware from "./middlewares/timeout";
 import useBadHTTPMiddleware from "./middlewares/badHTTP";
-import useWrongBusiMiddleware from "./middlewares/wrongBusiness.ts";
+import useWrongBusiMiddleware from "./middlewares/wrongBusiness";
+// @ts-ignore
 import { API_PREFIX } from "./constants";
 
 /**
@@ -17,9 +17,10 @@ const TIMEOUT = 30000;
  * 用于在路由切换时中断不必要的请求
  * @see src/router/util::abortPeddingFetches()
  */
+declare const window: any;
 window.abortFetchIds = [];
 
-const Wrapper = function (option) {
+const Wrapper = (function (option: { [key: string]: any }) {
   const r = new QuickFetch(
     mergeWith(
       {
@@ -31,7 +32,7 @@ const Wrapper = function (option) {
     )
   );
 
-  r.addEventListener(QuickFetch.EVENT_FETCH_ABORT, (e) => {
+  r.addEventListener(QuickFetch.EVENT_FETCH_ABORT, (e: CustomEvent) => {
     console.log("fetch abort", e.detail.fetchId);
   });
 
@@ -41,14 +42,19 @@ const Wrapper = function (option) {
   const wrongBusiMiddleware = useWrongBusiMiddleware(r);
 
   // extend a download method
-  r.download = function (method, url, params, roption) {
+  r.download = function (
+    method: string,
+    url: string,
+    params: any,
+    roption: { [key: string]: any } = {}
+  ) {
     const dlFetchId = "my_download";
 
     wrongBusiMiddleware.pause(dlFetchId);
 
     const downHeadersMiddleware = r.use(
       QuickFetch.REQUEST,
-      (req, next) => {
+      (req: any, next: FetchNextMW) => {
         req.headers.set("Content-Type", "application/x-www-form-urlencoded");
         next(req);
       },
@@ -65,10 +71,12 @@ const Wrapper = function (option) {
           catchError: false,
         })
       )
-      .then((res) => {
-        const isJSON = /^application\/(.*?\+)?json;?/.test(
-          res.headers.get("Content-Type")
-        );
+      .then((res: Response) => {
+        const contType = res.headers.get("Content-Type");
+        const isJSON =
+          contType !== null
+            ? /^application\/(.*?\+)?json;?/.test(contType)
+            : false;
         if (isJSON) return res.json();
 
         let filename = roption.filename;
@@ -92,7 +100,7 @@ const Wrapper = function (option) {
 
   ["get", "post", "delete", "put", "patch"].forEach((method) => {
     const originFunc = r[method];
-    r[method] = function (...args) {
+    r[method] = function (...args: Array<any>) {
       // eslint-disable-next-line prefer-const
       let [a, b, roption] = args;
 
@@ -121,16 +129,20 @@ const Wrapper = function (option) {
 
       r._args = args;
 
-      return originFunc.apply(r, args).then(async (res) => {
+      return originFunc.apply(r, args).then(async (res: Error | Response) => {
         if (res instanceof Error) {
           return Promise.reject(res);
         }
 
         const fidx = findIndex(
           window.abortFetchIds,
-          (id) => id === args[2].fetchId
+          (id: QFFetchID) => id === args[2].fetchId
         );
         if (fidx > -1) window.abortFetchIds.splice(fidx, 1);
+
+        if (roption.plainResponse) {
+          return res;
+        }
 
         const resJson = await res.json();
         return resJson;
@@ -139,6 +151,6 @@ const Wrapper = function (option) {
   }); // end of http methods
 
   return r;
-};
+} as any) as { new (...args: Array<any>): typeof QuickFetch };
 
 export default Wrapper;

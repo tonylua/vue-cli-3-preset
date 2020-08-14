@@ -1,7 +1,6 @@
 import Vue from "vue";
 import QuickFetch from "quickfetch";
-// @ts-ignore
-import CustomError from "../CustomError";
+import CustomError from "quickfetch/src/CustomError";
 import { isValidCode, getErrorTip, KEY_CODE } from "./busi.utils";
 
 export const ERROR_BUSINESS = "ERROR_BUSINESS";
@@ -25,7 +24,9 @@ const warnByResponse = (
   }
 };
 
-export default function useWrongBusiMiddleware(r: any): void {
+export default function useWrongBusiMiddleware(
+  r: any
+): Exclude<QFUseReturnType, void> {
   // wrong business logic
   const wrongBusiMiddleware = r.use(
     QuickFetch.RESPONSE,
