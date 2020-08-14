@@ -42,7 +42,7 @@ module.exports = (api, options, rootOptions) => {
       test: "npm run test:unit",
       "lint-staged": "lint-staged",
       "build-prod": "vue-cli-service build --mode prod",
-      postinstall: "npm rebuild node-sass",
+      // postinstall: "npm rebuild node-sass",
     },
     dependencies: {
       qs: "^6.6.0",
