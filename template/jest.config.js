@@ -1,5 +1,5 @@
 module.exports = {
-  etupFiles: ["<rootDir>/__mocks__/localStorageMock.js"],
+  setupFiles: ["<rootDir>/__mocks__/localStorageMock.js"],
   modulePaths: ["<rootDir>/src/components", "<rootDir>/src/utils"],
 
   moduleFileExtensions: ["js", "json", "jsx", "vue", "ts", "tsx"],

@@ -20,8 +20,8 @@ const init = async () => {
   // @ts-ignore
   const router = await import('./router');
   return new Vue({
-    <% if (opt_i18n) { %>
     // @ts-ignore
+    <% if (opt_i18n) { %>
     i18n,
     <% } %>
     router: router.default,
