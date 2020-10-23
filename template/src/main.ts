@@ -1,9 +1,19 @@
 import 'whatwg-fetch'
 import 'normalize.css'
 import Vue from 'vue'
+<% if (opt_compositionapi) { %>
+import './plugins/composition'
+<% } %>
+<% if (opt_elementui) { %>
+import './plugins/element'
+<% } %>
 import App from './App.vue'
 import filters from './filters'
 import directives from './directives'
+<% if (opt_i18n) { %>
+// @ts-ignore
+import i18n from './plugins/i18n'
+<% } %>
 
 Object.keys(filters).forEach(key=>{
   Vue.filter(key, filters[key]);

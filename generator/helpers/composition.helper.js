@@ -6,6 +6,4 @@ module.exports = (api) => {
   });
 
   api.render("../../custom-deps/composition");
-  const EntryFile = api.resolve("src/main.ts"); // 直接用 api.entryFile 有 bug
-  api.injectImports(EntryFile, `import './plugins/composition'`);
 };

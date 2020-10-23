@@ -16,7 +16,7 @@ jest.mock("@/store", () => ({
       // 各种统一提示，由 'GET /api/cps/getGlobalConfig' 返回
       tips: {
         // `jest.mock()` is not allowed to reference any out-of-scope variables
-        "200": {
+        "0": {
           // 成功时
           "/api/order/submitTempOrder": "操作成功1",
           "/api/cps/startInstance": "操作成功2",
