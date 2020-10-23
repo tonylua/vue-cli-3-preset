@@ -1,7 +1,7 @@
 module.exports = (api, ANSWERS) => {
   api.extendPackage({
     devDependencies: {
-      "element-ui": "^2.4.11",
+      "element-ui": "^2.13.2",
     },
   });
   api.render("../../custom-deps/element", {

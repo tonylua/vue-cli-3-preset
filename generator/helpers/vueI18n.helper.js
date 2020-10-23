@@ -1,7 +1,7 @@
 module.exports = (api) => {
   api.extendPackage({
     dependencies: {
-      "vue-i18n": "^8.4.0",
+      "vue-i18n": "^8.22.1",
       "vue-cookie": "^1.1.4",
     },
   });
