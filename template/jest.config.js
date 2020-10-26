@@ -1,4 +1,9 @@
 module.exports = {
+  globals: {
+    "ts-jest": {
+      babelConfig: true,
+    },
+  },
   setupFiles: ["<rootDir>/__mocks__/localStorageMock.js"],
   modulePaths: ["<rootDir>/src/components", "<rootDir>/src/utils"],
 
