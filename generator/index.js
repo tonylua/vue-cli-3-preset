@@ -43,6 +43,7 @@ module.exports = (api, options, rootOptions) => {
       "lint-staged": "lint-staged",
       "build-prod": "vue-cli-service build --mode prod",
       // postinstall: "npm rebuild node-sass",
+      postinstall: "node fix-vue-babel.js",
     },
     dependencies: {
       qs: "^6.9.4",
