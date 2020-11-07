@@ -39,11 +39,12 @@ module.exports = (api, options, rootOptions) => {
   api.extendPackage({
     eslintConfig,
     scripts: {
-      test: "npm run test:unit",
       "lint-staged": "lint-staged",
       "build-prod": "vue-cli-service build --mode prod",
-      // postinstall: "npm rebuild node-sass",
-      postinstall: "node fix-vue-babel.js",
+      postinstall:
+        'shell-exec --colored-output "node fix-vue-babel.js" "npm rebuild node-sass"',
+      test:
+        'shell-exec --colored-output "node fix-vue-babel.js" "npm run test:unit"',
     },
     dependencies: {
       qs: "^6.9.4",
