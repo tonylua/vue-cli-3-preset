@@ -51,6 +51,8 @@ module.exports = {
     "arrow-body-style": "warn",
     "import/prefer-default-export": "warn",
     "no-unused-expressions": "warn",
+    semi: "off",
+    indent: "off",
   },
   overrides: [
     {
