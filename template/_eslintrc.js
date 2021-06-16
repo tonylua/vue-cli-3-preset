@@ -9,13 +9,14 @@ module.exports = {
     "@vue/typescript",
     "plugin:prettier/recommended",
   ],
+  plugins: ["eslint-plugin-vue", "eslint-plugin-prettier"],
   parserOptions: {
     parser: "@typescript-eslint/parser",
   },
   rules: {
+    "prettier/prettier": "error",
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
     "no-debugger": "error",
-    "max-len": ["warn", { code: 120 }],
     "space-before-function-paren": "off",
     "no-underscore-dangle": "off",
     "no-param-reassign": "off",

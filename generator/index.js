@@ -50,6 +50,10 @@ module.exports = (api, options, rootOptions) => {
       qs: "^6.9.4",
     },
     devDependencies: {
+      "eslint-plugin-prettier": "^3.4.0",
+      "eslint-plugin-vue": "^4.5.0",
+      "prettier-eslint": "^12.0.0",
+      "eslint-config-prettier": "^8.3.0",
       "whatwg-fetch": "^3.4.1",
       lodash: "^4.17.20",
       "lint-staged": "^10.4.2",
@@ -65,10 +69,10 @@ module.exports = (api, options, rootOptions) => {
       "@typescript-eslint/parser": "^4.5.0",
       "@vue/cli-plugin-typescript": "^4.4.8",
       "@vue/eslint-config-typescript": "^7.0.0",
-      "ts-jest": "^26.4.1",
+      "ts-jest": "^26.5.4",
+      typescript: "^4.2.3",
       "tsconfig-paths-webpack-plugin": "^3.3.0",
       "react-is": "^17.0.0",
-      typescript: "~3.9.3",
     },
     "lint-staged": {
       "*.js": ["eslint --fix", "git add"],
