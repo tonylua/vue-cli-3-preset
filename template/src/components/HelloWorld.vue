@@ -56,7 +56,7 @@
 <% if (opt_elementui && opt_i18n) { %>
 import VueCookie from 'vue-cookie';
 <% } %>
-import { testDelay,testHttp,testBusiness, getInfo, downFile } from '@/requests';
+import {testDelay,testHttp,testBusiness,getInfo,downFile} from '@/requests';
 import HelloText from '@/components/HelloText';
 
 export default {
