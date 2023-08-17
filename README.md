@@ -3,6 +3,7 @@
 [Upgraded to Support Cli v4](https://cli.vuejs.org/migrating-from-v3/#upgrade-all-plugins-at-once)
 
 ```
+npm i -g shell-executor
 vue create --preset tonylua/vue-cli-3-preset <YOUR_PROJECT_NAME>
 ```
 
