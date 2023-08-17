@@ -4,20 +4,50 @@
     <h2>
       <hello-text :text="msg2" />
     </h2>
-		<% if (opt_elementui && opt_i18n) { %>
-		<el-button @click="toggleI18n">{{ $t('toggle') }} i18n</el-button>
-		<% } %>
+    <% if (opt_elementui && opt_i18n) { %>
+    <el-button @click="toggleI18n">{{ $t("toggle") }} i18n</el-button>
+    <% } %>
     <p>
-      For a guide and recipes on how to configure / customize this project,<br>
+      For a guide and recipes on how to configure / customize this project,<br />
       check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
+      <a href="https://cli.vuejs.org" target="_blank" rel="noopener"
+        >vue-cli documentation</a
+      >.
     </p>
     <h3>Installed CLI Plugins</h3>
     <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-unit-jest" target="_blank" rel="noopener">unit-jest</a></li>
-      <li><a href="https://www.npmjs.com/package/%2FUsers/tonylua/my_git/vue-cli-preset-pc-2019" target="_blank" rel="noopener">/Users/tonylua/my_git/vue-cli-preset-pc-2019</a></li>
+      <li>
+        <a
+          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel"
+          target="_blank"
+          rel="noopener"
+          >babel</a
+        >
+      </li>
+      <li>
+        <a
+          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint"
+          target="_blank"
+          rel="noopener"
+          >eslint</a
+        >
+      </li>
+      <li>
+        <a
+          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-unit-jest"
+          target="_blank"
+          rel="noopener"
+          >unit-jest</a
+        >
+      </li>
+      <li>
+        <a
+          href="https://www.npmjs.com/package/%2FUsers/tonylua/my_git/vue-cli-preset-pc-2019"
+          target="_blank"
+          rel="noopener"
+          >/Users/tonylua/my_git/vue-cli-preset-pc-2019</a
+        >
+      </li>
     </ul>
   </div>
 </template>
@@ -26,13 +56,7 @@
 <% if (opt_elementui && opt_i18n) { %>
 import VueCookie from 'vue-cookie';
 <% } %>
-import {
-  testDelay,
-  testHttp,
-  testBusiness,
-  getInfo,
-  downFile
-} from '@/requests';
+import { testDelay,testHttp,testBusiness, getInfo, downFile } from '@/requests';
 import HelloText from '@/components/HelloText';
 
 export default {
@@ -49,7 +73,7 @@ export default {
     }
   },
   mounted() {
-		
+
 		<% if (opt_express) { %>
 
     testDelay().catch((ex) => {

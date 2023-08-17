@@ -43,7 +43,7 @@ module.exports = (api, options, rootOptions) => {
       "build-prod": "vue-cli-service build --mode prod",
       lintfix: "npm run lint -- --fix",
       postinstall:
-        'shell-exec --colored-output "node fix-vue-babel.js" "npm rebuild node-sass" "npm run lintfix"',
+        'shell-exec --colored-output "node fix-vue-babel.js" "npm rebuild node-sass" "npm run lintfix" "npm i sass@1.32.6"',
       test:
         'shell-exec --colored-output "node fix-vue-babel.js" "npm run test:unit"',
     },
