@@ -54,6 +54,7 @@ module.exports = {
     "no-unused-expressions": "warn",
     semi: "off",
     indent: "off",
+    "no-shadow": "off",
   },
   overrides: [
     {
